@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">teacherspet</string>
+    <string name="title_activity_actionsscreen">actionsscreen</string>
+    <string name="title_activity_student_database">studentDatabase</string>
+    <string name="title_activity_discussionroom">discussionroom</string>
+    <string name="title_activity_testsandassignments">testsandassignments</string>
+    <string name="title_activity_profile">profileActivity</string>
+    <string name="title_activity_add_student">addStudent</string>
+    <string name="title_activity_testandassignmentcreate">testandassignmentcreate</string>
+</resources>
