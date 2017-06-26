@@ -8,16 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
-import com.example.mahendran.teacherspet.firebase.DiscussionboardValues;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.example.mahendran.teacherspet.DiscussionRoom.discussionroom;
+import com.example.mahendran.teacherspet.StudentDatabase.studentDatabase;
+import com.example.mahendran.teacherspet.Test.testsandassignments;
+import com.example.mahendran.teacherspet.DiscussionRoom.DiscussionboardValues;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -26,9 +23,7 @@ public class actionsscreen extends AppCompatActivity {
     private ImageButton button2;
     private ImageButton button3;
     private ImageButton button4;
-    private DatabaseReference mDatabase;
-    private DatabaseReference DiscussionboardCloudEndPoint;
-    ArrayList<DiscussionboardValues> discussionValues=new ArrayList<DiscussionboardValues>();
+    String studName="Fail";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +41,7 @@ public class actionsscreen extends AppCompatActivity {
         });
         Intent intent = getIntent();
         String id = intent.getStringExtra("String");
-
+        studName=intent.getStringExtra("id");
         button1 = (ImageButton) findViewById(R.id.studentdb);
         button2 = (ImageButton) findViewById(R.id.examandassignments);
 
@@ -97,6 +92,9 @@ public class actionsscreen extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent intent = new Intent(getBaseContext(), profileActivity.class);
                     intent.putExtra("student","s");
+
+                    intent.putExtra("id",studName);
+
                     startActivity(intent);
                     finish();
                 }

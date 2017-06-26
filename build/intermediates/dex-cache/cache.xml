@@ -61,7 +61,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="5bdd585ba49b8298b6f067e2ba78e89a422a3e9e">
+        sha1="458e800c52c3cdda89dba381ce6f6c52396aa3f0">
         <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_c1dc1a5f6f831fb7fae9bdec981161a62a18aa86\classes.dex" />
     </item>
     <item
@@ -250,7 +250,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="bd7e8cc8852856a90d81fda0e02e15fcf96430b5">
+        sha1="842c22f855100e35ea1ec4909945f0471db23e5b">
         <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_dc6fa83f13499325b23c7da4c0e9733acf1fe3e0\classes.dex" />
     </item>
     <item

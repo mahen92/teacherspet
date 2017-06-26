@@ -22,15 +22,15 @@
             android:label="@string/title_activity_actionsscreen"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".studentDatabase"
+            android:name=".StudentDatabase.studentDatabase"
             android:label="@string/title_activity_student_database"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".discussionroom"
+            android:name=".DiscussionRoom.discussionroom"
             android:label="@string/title_activity_discussionroom"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".testsandassignments"
+            android:name=".Test.testsandassignments"
             android:label="@string/title_activity_testsandassignments"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -38,16 +38,24 @@
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".onClickClasses.addStudent"
+            android:name=".StudentDatabase.addStudent"
             android:label="@string/title_activity_add_student"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".onClickClasses.testandassignmentcreate"
+            android:name=".Test.testandassignmentcreate"
             android:label="@string/title_activity_testandassignmentcreate"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".onClickClasses.StudentDiscussionBoard"
+            android:name=".DiscussionRoom.StudentDiscussionBoard"
             android:label="@string/title_activity_student_discussion_board"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ClassesAndTeachers.ClassAndTeachers"
+            android:label="@string/title_activity_class_and_teachers"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Test.AddTest"
+            android:label="@string/title_activity_add_test"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

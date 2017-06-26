@@ -10,14 +10,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.mahendran.teacherspet.onClickClasses.testandassignmentcreate"
+    tools:context="com.example.mahendran.teacherspet.Test.testandassignmentcreate"
     tools:showIn="@layout/activity_testandassignmentcreate">
-<EditText
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/testname"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/student_test_list_view"
@@ -27,17 +21,7 @@
         android:orientation="vertical"
         android:scrollbars="none"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/testname"
-        android:layout_toEndOf="@+id/testname"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
-        android:layout_marginBottom="66dp"
-        android:visibility="invisible"/>
-    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/testslistview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"/>
-
-
+        android:layout_marginBottom="66dp" />
 </RelativeLayout>
