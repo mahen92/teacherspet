@@ -1,14 +1,22 @@
 package com.example.mahendran.teacherspet.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mahendran.teacherspet.R;
+import com.example.mahendran.teacherspet.firebase.DiscussionboardValues;
+import com.example.mahendran.teacherspet.firebase.StudentValues;
+import com.example.mahendran.teacherspet.onClickClasses.StudentDiscussionBoard;
+import com.example.mahendran.teacherspet.profileActivity;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 
@@ -16,45 +24,41 @@ import java.util.ArrayList;
  * Created by Mahendran on 28-05-2017.
  */
 
-public class discussionAdapter extends ArrayAdapter {
+public class discussionAdapter extends FirebaseRecyclerAdapter<DiscussionboardValues, DiscussionValuesAdapterHolder> {
+    private static final String TAG = FireBaseAdapter.class.getSimpleName();
     private Context context;
-    private LayoutInflater inflater;
-    ArrayList<String> imageUrls1;
-    String[] images;
+    private String teacher;
 
-    public discussionAdapter(Context context, ArrayList<String> imageUrls) {
-        super(context, R.layout.student_list_content, imageUrls);
-
-        this.context=context;
-        imageUrls1=imageUrls;
-
-        inflater=LayoutInflater.from(context);
-
-
+    public discussionAdapter(Class<DiscussionboardValues> modelClass, int modelLayout, Class<DiscussionValuesAdapterHolder> viewHolderClass, DatabaseReference ref, Context context,String check) {
+        super(modelClass, modelLayout, viewHolderClass, ref);
+        teacher=check;
+        this.context = context;
     }
-    public long getItemId(int position)
-    {
-        return position;
-    }
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
-        Log.v("Test","Alohamora");
-        if (null == convertView) {
-            convertView = inflater.inflate(R.layout.discussiondesign, parent, false);
+
+    @Override
+    protected void populateViewHolder(DiscussionValuesAdapterHolder viewHolder, DiscussionboardValues model, int position) {
+        viewHolder.answer.setText(model.answer);
+        viewHolder.question.setText(model.question);
+        final String quest=model.question;
+        final String ans=model.answer;
+        final String id=model.id;
+        if(teacher!=null) {
+            Log.v("Checkers", teacher);
         }
-        if((imageUrls1.size()!=0)&&(imageUrls1!=null)) {
+        if(teacher=="t") {
+        viewHolder.answer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-            TextView title = (TextView)convertView.findViewById(R.id.question);
-            TextView title1 = (TextView)convertView.findViewById(R.id.answer);
-            Log.v("Tesalt",imageUrls1.get(position));
-            title.setText("What are we doing?");
-            title.setText("Android and stuff");
-            //Picasso.with(context).load("http://image.tmdb.org/t/p/w185/"+images[position]).fit().into((ImageView) convertView);
+                Intent intent = new Intent(context, StudentDiscussionBoard.class);
+                intent.putExtra("question",quest);
+                intent.putExtra("answer",ans);
+                intent.putExtra("id",id);
+                intent.putExtra("from","Teacher");
+                context.startActivity(intent);
 
-
+            }
+        });
         }
-
-
-        return convertView;
     }
 }

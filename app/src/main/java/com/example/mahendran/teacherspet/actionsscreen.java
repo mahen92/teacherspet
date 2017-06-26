@@ -12,11 +12,23 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.mahendran.teacherspet.firebase.DiscussionboardValues;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
 public class actionsscreen extends AppCompatActivity {
     private ImageButton button1;
     private ImageButton button2;
     private ImageButton button3;
     private ImageButton button4;
+    private DatabaseReference mDatabase;
+    private DatabaseReference DiscussionboardCloudEndPoint;
+    ArrayList<DiscussionboardValues> discussionValues=new ArrayList<DiscussionboardValues>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,12 +45,12 @@ public class actionsscreen extends AppCompatActivity {
             }
         });
         Intent intent = getIntent();
-        String id = intent.getStringExtra("Extra");
+        String id = intent.getStringExtra("String");
 
         button1 = (ImageButton) findViewById(R.id.studentdb);
         button2 = (ImageButton) findViewById(R.id.examandassignments);
 
-        if(id.equals("teacher")) {
+        if((id!=null)&&(id.equals("Teacher"))) {
             button3 = (ImageButton) findViewById(R.id.discussionroom);
             button1.setVisibility(View.VISIBLE);
             button2.setVisibility(View.VISIBLE);
@@ -59,6 +71,7 @@ public class actionsscreen extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent intent = new Intent(getBaseContext(), discussionroom.class);
                     startActivity(intent);
+                    intent.putExtra("teacher","t");
                     finish();
                 }
             });
@@ -73,7 +86,7 @@ public class actionsscreen extends AppCompatActivity {
             });
 
         }
-        if(id.equals("student"))
+        if(((id!=null)&&(id.equals("Student"))))
         {
             button3 = (ImageButton) findViewById(R.id.discussionroom);
             button4 = (ImageButton) findViewById(R.id.profiles);
@@ -83,6 +96,17 @@ public class actionsscreen extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getBaseContext(), profileActivity.class);
+                    intent.putExtra("student","s");
+                    startActivity(intent);
+                    finish();
+                }
+            });
+
+            button3.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getBaseContext(), discussionroom.class);
                     intent.putExtra("student","s");
                     startActivity(intent);
                     finish();

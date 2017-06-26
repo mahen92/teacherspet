@@ -44,6 +44,10 @@
         <activity
             android:name=".onClickClasses.testandassignmentcreate"
             android:label="@string/title_activity_testandassignmentcreate"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".onClickClasses.StudentDiscussionBoard"
+            android:label="@string/title_activity_student_discussion_board"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

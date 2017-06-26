@@ -7,4 +7,7 @@
     <string name="title_activity_profile">profileActivity</string>
     <string name="title_activity_add_student">addStudent</string>
     <string name="title_activity_testandassignmentcreate">testandassignmentcreate</string>
+    <string name="title_activity_student_discussion_board">StudentDiscussionBoard</string>
+    <string name="radio_teacher">Teacher</string>
+    <string name="radio_student">Student</string>
 </resources>

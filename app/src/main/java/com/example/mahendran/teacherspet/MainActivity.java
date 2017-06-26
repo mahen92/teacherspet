@@ -8,24 +8,36 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.mahendran.teacherspet.firebase.Teachervalues;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
 
 
     private DatabaseReference mDatabase;
+    private DatabaseReference teacherCloudEndPoint;
 
-    private DatabaseReference studentCloudEndPoint;
-    private DatabaseReference discussionCloudEndPoint;
 
     private EditText et_Username;
     // Password
     private EditText et_Password;
     private Button bt_SignIn;
+    private Button bt_SignUp;
+    private FirebaseAuth auth;
+    private RadioGroup radioRoleGroup;
+    private RadioButton radioRoleButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,43 +45,78 @@ public class MainActivity extends AppCompatActivity {
         et_Username = (EditText) findViewById(R.id.et_Username);
         et_Password = (EditText) findViewById(R.id.et_Password);
         bt_SignIn = (Button) findViewById(R.id.button1);
-        mDatabase =  FirebaseDatabase.getInstance().getReference();
-        studentCloudEndPoint = mDatabase.child("Students");
+        bt_SignUp = (Button) findViewById(R.id.sign_up);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        teacherCloudEndPoint = mDatabase.child("Teachers");
+        auth = FirebaseAuth.getInstance();
+        radioRoleGroup = (RadioGroup) findViewById(R.id.radioRole);
+
         //discussionCloudEndPoint = mDatabase.child("Discussion");
 
 
-        bt_SignIn.setOnClickListener(new View.OnClickListener() {
-
+        bt_SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                // Stores User name
-                String username = String.valueOf(et_Username.getText());
-                // Stores Password
+            public void onClick(View v) {
+                String email = String.valueOf(et_Username.getText());
                 String password = String.valueOf(et_Password.getText());
+                int selectedId = radioRoleGroup.getCheckedRadioButtonId();
+                radioRoleButton = (RadioButton) findViewById(selectedId);
+                auth.createUserWithEmailAndPassword(email, password);
 
-                // Validates the User name and Password for admin, admin
-                if (username.equals("") && password.equals("")) {
-                    Log.v("Test0","Alohamora");
-                    String t="teacher";
-                    Intent intent = new Intent(getBaseContext(), actionsscreen.class);
-                    intent.putExtra("Extra",t);
-                    startActivity(intent);
-                    finish();
+
+                //teacherCloudEndPoint.setValue(teachValues);
+                if(radioRoleButton.getText().equals("Teacher"))
+                {
+                    Teachervalues teachValues=new Teachervalues();
+                    teachValues.teacherId=email;
+                    String key = teacherCloudEndPoint.push().getKey();
+                    teacherCloudEndPoint.child(key).setValue(teachValues);
+                    DatabaseReference tempCloudEndPoint;
+                    tempCloudEndPoint = teacherCloudEndPoint.child(email.split("@")[0]);
+                    String key1 = tempCloudEndPoint.push().getKey();
+                    tempCloudEndPoint.child(key).setValue(email);
+
                 }
-                if(username.equals("s") && password.equals("s")){
-                    String s="student";
-                    Intent intent = new Intent(getBaseContext(), actionsscreen.class);
-                    intent.putExtra("Extra",s);
-                    startActivity(intent);
-                    finish();
-                }
-                else {
-                    Toast.makeText(getBaseContext(), "fail",
-                            Toast.LENGTH_LONG).show();
-                }
+                Toast.makeText(getBaseContext(), "Done",
+                        Toast.LENGTH_LONG).show();
+
+
             }
         });
-        
+
+
+        bt_SignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = String.valueOf(et_Username.getText());
+                String password = String.valueOf(et_Password.getText());
+                int selectedId = radioRoleGroup.getCheckedRadioButtonId();
+                radioRoleButton = (RadioButton) findViewById(selectedId);
+                auth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                if (!task.isSuccessful()) {
+                                    // there was an error
+                                    Toast.makeText(getBaseContext(), "Try Again",
+                                            Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(getBaseContext(), "Gall",
+                                            Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(getBaseContext(),actionsscreen.class);
+                                    intent.putExtra("String",radioRoleButton.getText());
+                                    startActivity(intent);
+                                    finish();
+                                }
+
+                            }
+                        });
+
+            }
+        });
+
     }
 
 }
