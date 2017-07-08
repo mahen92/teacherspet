@@ -3,6 +3,15 @@
 
     <item
         is-multidex="true"
+        jar="C:\Users\Mahendran\.gradle\caches\modules-2\files-2.1\com.firebase\tubesock\0.0.12\6ec0bbd3e161a73ed672284b587fd32309a86d7a\tubesock-0.0.12.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6ec0bbd3e161a73ed672284b587fd32309a86d7a">
+        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\tubesock-0.0.12_91b8e48818670894d2c31b2aa4ef7c23fe43a04c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth\10.2.6\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -21,12 +30,30 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.android.support\design\25.3.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-25.3.1_facf0b34f441183e280f76ee4f48577d159a4188\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.3.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="95519720620b553f63afc789beba9ad582807f7c">
         <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-25.3.1_b3ab8d39307641689555e57a4a2ae450e3bcf1ce\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.google.firebase\firebase-database\10.2.6\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="de24d8023e8da79f30bee46b298f606e5e758432">
+        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-database-10.2.6_1fd22e64dfe4285c82b2be61fd810aa99c5b774f\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -61,8 +88,17 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="458e800c52c3cdda89dba381ce6f6c52396aa3f0">
+        sha1="397be1090f4d05452a58c4246f99d05faf816305">
         <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_c1dc1a5f6f831fb7fae9bdec981161a62a18aa86\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.3.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-25.3.1_e775cfb442362cf5232b58a38b40038863dc5f96\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -93,12 +129,30 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\Users\Mahendran\.gradle\caches\modules-2\files-2.1\io.reactivex.rxjava2\rxjava\2.0.4\cbcf91e47e43607fb628b11b3571f212f11a6f84\rxjava-2.0.4.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="cbcf91e47e43607fb628b11b3571f212f11a6f84">
+        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\rxjava-2.0.4_fb9afed1421a7baa9368f6acdae456bd1f7db8c6\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.3.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
         <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-25.3.1_2d7bb3c0b8d1b23c3f9b64ae912d5cca04dcf6f3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\25.3.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="914f5d3e3ace66080e59613708f06d129a222e25">
+        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-cardview-v7-25.3.1_f5991ca084d280e356640e3e6712ec458da6f635\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -111,12 +165,84 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\Users\Mahendran\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-core\2.2.2\d20be6a5ddd6f8cfd36ebf6dea329873a1c41f1b\jackson-core-2.2.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d20be6a5ddd6f8cfd36ebf6dea329873a1c41f1b">
+        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\jackson-core-2.2.2_78f651938f4b7d4def7f075603c6aad3fd74869b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ccffa828a66dcd73f2169ab36cee7c1b6c461235">
+        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_dc6fa83f13499325b23c7da4c0e9733acf1fe3e0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Mahendran\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife-annotations\8.6.0\48efa6f14074e1a6b16e02ac05eba3fc5c7c7ec8\butterknife-annotations-8.6.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="48efa6f14074e1a6b16e02ac05eba3fc5c7c7ec8">
+        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\butterknife-annotations-8.6.0_b3eb3675de9c34690656dfcf6c135bb82d5602ec\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\Mahendran\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
         <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.3.1_1d96c802a9d489d9663af02a0c84768ce99ab2f0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.google.firebase\firebase-common\10.2.6\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0a534044236cf81b002604643d23e7ca56bd1ee0">
+        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-common-10.2.6_65e82824bbb519e28821e0370bc7e7430f0d2111\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.jakewharton\butterknife\8.6.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="be587097e648eabfb7f9eca23ab03369894e2d5d">
+        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.jakewharton-butterknife-8.6.0_1a4d620b233ada9bb46ae0740cad71aadcc8dcf6\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\10.2.6\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="900a290779cdb4eb2e63b6f7806fd9f30ce4f60d">
+        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-basement-10.2.6_31fb6aad4f5466a9f8b7f41fca03b25b8b98c1a4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Mahendran\.gradle\caches\modules-2\files-2.1\org.reactivestreams\reactive-streams\1.0.0\14b8c877d98005ba3941c9257cfe09f6ed0e0d74\reactive-streams-1.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="14b8c877d98005ba3941c9257cfe09f6ed0e0d74">
+        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\reactive-streams-1.0.0_e1a88949554330ce93fd5fba9214bd62057df0ca\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics-impl\10.2.6\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="da832806828ba407284c0c4b1d87b8f9ed9f2520">
+        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-analytics-impl-10.2.6_c7c21f9ccc00aadc8c40dbe9acf76689502547f9\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -183,6 +309,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.3.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-25.3.1_0d736bb51132ea72f542bccca2dab559b34c4c6f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.firebaseui\firebase-ui-database\1.2.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -198,96 +333,6 @@
         revision="25.0.2"
         sha1="285cb9c666f0f0f3dd8a1be04e1f457eb7b15113">
         <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\jackson-annotations-2.2.2_1b3c2ea0ba810a5d010fce80a4b7a3dc1282f5e5\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Mahendran\.gradle\caches\modules-2\files-2.1\com.firebase\tubesock\0.0.12\6ec0bbd3e161a73ed672284b587fd32309a86d7a\tubesock-0.0.12.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="6ec0bbd3e161a73ed672284b587fd32309a86d7a">
-        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\tubesock-0.0.12_91b8e48818670894d2c31b2aa4ef7c23fe43a04c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.android.support\design\25.3.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
-        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-25.3.1_facf0b34f441183e280f76ee4f48577d159a4188\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.google.firebase\firebase-database\10.2.6\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="de24d8023e8da79f30bee46b298f606e5e758432">
-        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-database-10.2.6_1fd22e64dfe4285c82b2be61fd810aa99c5b774f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.3.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
-        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-25.3.1_e775cfb442362cf5232b58a38b40038863dc5f96\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Mahendran\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-core\2.2.2\d20be6a5ddd6f8cfd36ebf6dea329873a1c41f1b\jackson-core-2.2.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d20be6a5ddd6f8cfd36ebf6dea329873a1c41f1b">
-        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\jackson-core-2.2.2_78f651938f4b7d4def7f075603c6aad3fd74869b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="842c22f855100e35ea1ec4909945f0471db23e5b">
-        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_dc6fa83f13499325b23c7da4c0e9733acf1fe3e0\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.google.firebase\firebase-common\10.2.6\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="0a534044236cf81b002604643d23e7ca56bd1ee0">
-        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-common-10.2.6_65e82824bbb519e28821e0370bc7e7430f0d2111\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\10.2.6\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="900a290779cdb4eb2e63b6f7806fd9f30ce4f60d">
-        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-basement-10.2.6_31fb6aad4f5466a9f8b7f41fca03b25b8b98c1a4\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics-impl\10.2.6\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="da832806828ba407284c0c4b1d87b8f9ed9f2520">
-        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-analytics-impl-10.2.6_c7c21f9ccc00aadc8c40dbe9acf76689502547f9\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.3.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="C:\ud851-Sunshine-student\ud851-Sunshine-student\teacherspet\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-25.3.1_0d736bb51132ea72f542bccca2dab559b34c4c6f\classes.dex" />
     </item>
 
 </items>

@@ -12,4 +12,17 @@
     <string name="radio_student">Student</string>
     <string name="title_activity_class_and_teachers">ClassAndTeachers</string>
     <string name="title_activity_add_test">AddTest</string>
+    <string name="account_created">Your account has been created</string>
+    <string name="teacher">Teacher</string>
+    <string name="teacherslist">TeachersList</string>
+    <string name="student">Student</string>
+    <string name="reg_mail_id_needed">Enter your registered email id to reset password</string>
+    <string name="instructions_sent">We have sent you instructions to reset your password!</string>
+    <string name="failed_to_send">Failed to send reset email!</string>
+    <string name="database_issue">There seems to be an issue with the database.Please try later</string>
+    <string name="login_as_teacher">You are a Teacher. Please login as a teacher</string>
+    <string name="not_a_teacher">You are a not a teacher.</string>
+    <string name="login_incorrect">User name or password is incorrect</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

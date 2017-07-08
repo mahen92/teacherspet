@@ -11,8 +11,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.example.mahendran.teacherspet.Connectivity.ConnectivityReceiver;
+import com.example.mahendran.teacherspet.Connectivity.MyApplication;
 import com.example.mahendran.teacherspet.R;
+import com.example.mahendran.teacherspet.actionsscreen;
 import com.example.mahendran.teacherspet.customAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class studentDatabase extends AppCompatActivity {
+public class studentDatabase extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
     private DatabaseReference mDatabase;
     private DatabaseReference studentCloudEndPoint;
     private DatabaseReference teacherCloudEndPoint;
@@ -54,8 +58,6 @@ public class studentDatabase extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
                 Intent intent = new Intent(getApplicationContext(), addStudent.class);
                 startActivity(intent);
             }
@@ -67,5 +69,24 @@ public class studentDatabase extends AppCompatActivity {
         gridView.setLayoutManager(linearLayoutManager);
         gridView.setAdapter(mFireAdapter);
     }
+
+    protected void onResume() {
+        super.onResume();
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(this);
+    }
+
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        statusDisplay(isConnected);
+    }
+
+    private void statusDisplay(boolean isConnected) {
+        if(!(isConnected)) {
+            Toast.makeText(getApplication(), "There seems to be a connectivity issue. Please check your connectivity.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
 

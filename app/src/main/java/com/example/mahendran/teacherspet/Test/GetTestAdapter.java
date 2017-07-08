@@ -42,6 +42,7 @@ public class GetTestAdapter extends FirebaseRecyclerAdapter<StudentValues, GetTe
     protected void populateViewHolder(GetTestAdapterHolder viewHolder, final StudentValues model, int position) {
         Log.v("Firebaser","adapeter");
         viewHolder.name.setText(model.studentName);
+        final String stname=model.studentName;
         if(model.map.containsKey(testName)) {
             viewHolder.marks.setText(model.map.get(testName));
         }
@@ -52,6 +53,7 @@ public class GetTestAdapter extends FirebaseRecyclerAdapter<StudentValues, GetTe
             public void onClick(View view) {
                 Intent intent = new Intent(context,AddTest.class);
                 intent.putExtra("TestName",testName);
+                intent.putExtra("StudentName",stname);
                 intent.putExtra("Key",key);
                 context.startActivity(intent);
 

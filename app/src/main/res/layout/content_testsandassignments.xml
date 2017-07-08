@@ -18,7 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical"
-        android:scrollbars="none"/>
+        android:scrollbars="none"
+        android:paddingBottom="80dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -28,18 +29,23 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="27dp"
+        android:elevation="12dp"
         android:layout_marginEnd="27dp"
         android:id="@+id/add_test_layout">
         <EditText
             android:layout_width="217dp"
             android:layout_height="wrap_content"
+            android:hint="Add Your Test here"
             android:id="@+id/add_test"
             />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/add_test_button"
-            android:text="ADD"/>
+            android:background="#000000"
+            android:elevation="14dp"
+            android:text="ADD"
+            android:textColor="#ffffff"/>
     </LinearLayout>
 
 </RelativeLayout>

@@ -2,6 +2,7 @@ package com.example.mahendran.teacherspet.StudentDatabase;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -31,13 +32,15 @@ public class FireBaseAdapter extends FirebaseRecyclerAdapter<StudentValues, Fire
         viewHolder.name.setText(model.studentName);
         final String id= model.id;
         final String name= model.studentName;
+        final StudentValues m=model;
         viewHolder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,name,Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, profileActivity.class);
                 intent.putExtra("id",model.studentName);
-
+                Bundle b = new Bundle();
+                b.putSerializable("Object", m);
+                intent.putExtras(b);
                 context.startActivity(intent);
 
             }

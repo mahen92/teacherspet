@@ -8,93 +8,164 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/ms"
+    android:background="@drawable/ms1"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     tools:context="com.example.mahendran.teacherspet.MainActivity">
 
-
-    <EditText
-        android:id="@+id/et_Password"
-        android:layout_width="wrap_content"
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:layout_marginEnd="51dp"
-        android:layout_marginBottom="40dp"
-        android:layout_marginRight="51dp"
-        android:layout_above="@+id/button1"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:paddingTop="140dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:id="@+id/layoutscreen"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-    <EditText
-        android:id="@+id/et_Username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_marginBottom="14dp"
-        android:layout_above="@+id/et_Password"
-        android:layout_alignLeft="@+id/et_Password"
-        android:layout_alignStart="@+id/et_Password">
-
-        <requestFocus />
-    </EditText>
-
-    <Button
-        android:id = "@+id/button1"
-        android:layout_width = "wrap_content"
-        android:layout_height = "wrap_content"
-        android:onClick = "login"
-        android:text = "Login"
-
-        android:layout_marginBottom="52dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:id = "@+id/sign_up"
-        android:layout_width = "wrap_content"
-        android:layout_height = "wrap_content"
-        android:onClick = "Sign Up"
-        android:text = "Sign Up"
-
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_alignStart="@+id/button1" />
-
-    <RadioGroup
-        android:id="@+id/radioRole"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/et_Username"
-        android:layout_alignRight="@+id/button1"
-        android:layout_alignEnd="@+id/button1"
-        android:layout_marginRight="18dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="17dp">
-
-        <RadioButton
-            android:id="@+id/radioTeacher"
+        <RadioGroup
+            android:id="@+id/radioRole"
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/radio_teacher"
-            android:checked="true" />
+            android:layout_gravity="center"
 
-        <RadioButton
-            android:id="@+id/radioStudent"
-            android:layout_width="wrap_content"
+            android:paddingTop="50dp"
+            >
+
+            <RadioButton
+                android:id="@+id/radioTeacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radio_teacher"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:background="#d3d3d3"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/radioStudent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:background="#d3d3d3"
+                android:text="@string/radio_student" />
+
+        </RadioGroup>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/radio_student" />
+            android:orientation="vertical"
+            android:background="@android:color/transparent"
+            >
+        <!-- Email Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
 
-    </RadioGroup>
 
-    <Button
-        android:id="@+id/btn_reset_password"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dip"
-        android:background="@null"
-        android:text="Forgot Password"
-        android:textAllCaps="false"
-        android:textColor="@color/colorAccent" />
+            android:layout_marginBottom="8dp">
 
+            <EditText android:id="@+id/et_Username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHighlight="@color/colorPrimary"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:background="#d3d3d3"
+                android:inputType="textEmailAddress"
+                android:hint="Email" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Password Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp">
+            <EditText android:id="@+id/et_Password"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:background="#d3d3d3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="Password"/>
+        </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:color/transparent"
+            android:visibility="invisible"
+            android:id="@+id/name_layout"
+            >
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                >
+                <EditText android:id="@+id/teacher_name"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="#d3d3d3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+
+                    android:hint="Enter Your teacher's Mail ID"/>
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnCount="2"
+            android:rowCount="1"
+            android:orientation="horizontal">
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/button1"
+                android:layout_gravity="left|top"
+                android:text="Login"/>
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/sign_up"
+                android:layout_gravity="right|top"
+                android:text="Sign Up"/>
+        </GridLayout>
+
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_reset_password"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:padding="3dp"
+            android:text="Reset Your Password"/>
+
+    </LinearLayout>
+</ScrollView>
+    <ProgressBar  android:indeterminate="true"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:id="@+id/progressBar"></ProgressBar>
 
 </RelativeLayout>

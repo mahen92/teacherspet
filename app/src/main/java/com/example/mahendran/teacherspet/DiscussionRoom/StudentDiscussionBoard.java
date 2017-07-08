@@ -12,12 +12,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mahendran.teacherspet.Connectivity.ConnectivityReceiver;
+import com.example.mahendran.teacherspet.Connectivity.MyApplication;
 import com.example.mahendran.teacherspet.R;
 import com.example.mahendran.teacherspet.Test.TestValues;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class StudentDiscussionBoard extends AppCompatActivity {
+public class StudentDiscussionBoard extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
     private DatabaseReference mDatabase;
     private DatabaseReference DiscussionboardCloudEndPoint;
     private DatabaseReference teacherCloudEndPoint;
@@ -26,7 +28,7 @@ public class StudentDiscussionBoard extends AppCompatActivity {
     private EditText question;
     private EditText answer;
     private String from;
-    private Button dltButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +39,6 @@ public class StudentDiscussionBoard extends AppCompatActivity {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String email=pref.getString("Email", null);
         String className=pref.getString("class", null);
-        dltButton=(Button)findViewById(R.id.delete_button);
         mDatabase =  FirebaseDatabase.getInstance().getReference();
 
         mDatabase =  FirebaseDatabase.getInstance().getReference();
@@ -48,6 +49,7 @@ public class StudentDiscussionBoard extends AppCompatActivity {
         from=getIntent().getStringExtra("from");
         final String quest=getIntent().getStringExtra("question");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton delete = (FloatingActionButton) findViewById(R.id.delete_button);
         answer = (EditText) findViewById(R.id.answer_by_teacher);
         question = (EditText) findViewById(R.id.Question_from_student);
         String teacherAnswer="";
@@ -61,17 +63,16 @@ public class StudentDiscussionBoard extends AppCompatActivity {
 
         if((from==null)){
             answer.setEnabled(false);
+            delete.setVisibility(View.INVISIBLE);
         }
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Log.v("StringPlease","In the onClick");
-                Toast.makeText(getBaseContext(), "Clicked",
-                        Toast.LENGTH_LONG).show();
+
                 DiscussionboardValues dv=new DiscussionboardValues();
-                dv.answer=("Answer"+String.valueOf(answer.getText()));
-                dv.question=("Question"+String.valueOf(question.getText()));
+                dv.answer=(String.valueOf(answer.getText()));
+                dv.question=(String.valueOf(question.getText()));
                 String key="";
                 if(id==null) {
                     key = DiscussionboardCloudEndPoint.push().getKey();
@@ -82,16 +83,35 @@ public class StudentDiscussionBoard extends AppCompatActivity {
                 }
                 dv.id=key;
                 DiscussionboardCloudEndPoint.child(key).setValue(dv);
-                Snackbar.make(view, "Replace with your own fucking action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Toast.makeText(getApplication(), "Updated", Toast.LENGTH_SHORT).show();
+
+
             }
         });
-        dltButton.setOnClickListener(new View.OnClickListener() {
+        delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DiscussionboardCloudEndPoint.child(id).removeValue();
+                Toast.makeText(getApplication(), "Deleted", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }
 
+    protected void onResume() {
+        super.onResume();
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(this);
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        statusDisplay(isConnected);
+    }
+
+    private void statusDisplay(boolean isConnected) {
+        if(!(isConnected)) {
+            Toast.makeText(getApplication(), "There seems to be a connectivity issue. Please check your connectivity.", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

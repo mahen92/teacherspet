@@ -23,31 +23,33 @@ public class ClassAdapter extends FirebaseRecyclerAdapter<ClassValues, ClassValu
 
     public ClassAdapter(Class<ClassValues> modelClass, int modelLayout, Class<ClassValueAdapterHolder> viewHolderClass, DatabaseReference ref, Context context) {
         super(modelClass, modelLayout, viewHolderClass, ref);
-        Log.v("cheepers","cheepers");
         this.context = context;
-        Log.v("cheepers1","cheepers1");
     }
 
 
     @Override
     protected void populateViewHolder(final ClassValueAdapterHolder viewHolder, ClassValues model, int position) {
-        viewHolder.className.setText(model.ClassId);
-        final String className=model.ClassId;
-        viewHolder.className.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences sharedpreferences;
-                sharedpreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString("class",className );
-                editor.commit();
-                Intent intent = new Intent(context,actionsscreen.class);
-                intent.putExtra("String","Teacher");
-                intent.putExtra("Class",className);
-                context.startActivity(intent);
 
-            }
-        });
+
+            viewHolder.className.setText(model.getClassName());
+
+            final String className = model.ClassId;
+            viewHolder.className.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SharedPreferences sharedpreferences;
+                    sharedpreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString("class", className);
+                    editor.commit();
+                    Intent intent = new Intent(context, actionsscreen.class);
+                    intent.putExtra("String", "Teacher");
+                    intent.putExtra("Class", className);
+                    context.startActivity(intent);
+
+                }
+            });
+
     }
 }
 

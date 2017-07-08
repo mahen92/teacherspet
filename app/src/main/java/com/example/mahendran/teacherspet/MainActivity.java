@@ -1,19 +1,30 @@
 package com.example.mahendran.teacherspet;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.mahendran.teacherspet.ClassesAndTeachers.ClassAndTeachers;
 import com.example.mahendran.teacherspet.ClassesAndTeachers.ClassValues;
+import com.example.mahendran.teacherspet.Connectivity.ConnectivityReceiver;
+import com.example.mahendran.teacherspet.Connectivity.MyApplication;
 import com.example.mahendran.teacherspet.StudentDatabase.StudentValues;
 import com.example.mahendran.teacherspet.firebase.Teachervalues;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,41 +39,76 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class MainActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener  {
 
 
     private DatabaseReference mDatabase;
     private DatabaseReference teacherCloudEndPoint;
     private DatabaseReference listCloudEndPoint;
-
-    private EditText et_Username;
-    // Password
-    private EditText et_Password;
-    private Button bt_SignIn;
-    private Button bt_SignUp;
-    private Button resetButton;
+    @BindView(R.id.et_Username) EditText et_Username;
+    @BindView(R.id.et_Password) EditText et_Password;
+    @BindView(R.id.teacher_name) EditText teacherName;
+    @BindView(R.id.button1) Button bt_SignIn;
+    @BindView(R.id.sign_up) Button bt_SignUp;
+    @BindView(R.id.btn_reset_password) Button resetButton;
+    SharedPreferences sharedpreferences;
     private FirebaseAuth auth;
     private RadioGroup radioRoleGroup;
     private RadioButton radioRoleButton;
+    private ProgressBar progressBar;
     private ArrayList<String> teacherList=new ArrayList<String>();
-
+    static int count=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        et_Username = (EditText) findViewById(R.id.et_Username);
-        et_Password = (EditText) findViewById(R.id.et_Password);
-        bt_SignIn = (Button) findViewById(R.id.button1);
-        bt_SignUp = (Button) findViewById(R.id.sign_up);
-        resetButton=(Button) findViewById(R.id.btn_reset_password);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        teacherCloudEndPoint = mDatabase.child("Teachers");
-        listCloudEndPoint = mDatabase.child("TeachersList");
         auth = FirebaseAuth.getInstance();
+        sharedpreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
+        LinearLayout layout= (LinearLayout) findViewById(R.id.layoutscreen);
+        final LinearLayout nlayout= (LinearLayout) findViewById(R.id.name_layout);
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            layout.setPadding(0,20,0,0);
+        }
+        ButterKnife.bind(this);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        teacherCloudEndPoint = mDatabase.child(getResources().getString(R.string.teacher));
+        listCloudEndPoint = mDatabase.child(getResources().getString(R.string.teacherslist));
+
+
         radioRoleGroup = (RadioGroup) findViewById(R.id.radioRole);
+        int selectedId = radioRoleGroup.getCheckedRadioButtonId();
+        radioRoleButton = (RadioButton) findViewById(selectedId);
+        teacherlist();
+        checkConnection();
+        autoAuthentication();
+        radioRoleGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // checkedId is the RadioButton selected
+                RadioButton radioRoleButton1;
+                int selectedId1 = radioRoleGroup.getCheckedRadioButtonId();
+                radioRoleButton1 = (RadioButton) findViewById(selectedId1);
+                if(radioRoleButton1.getText().toString().equals(getResources().getString(R.string.student)))
+                {
 
-        //discussionCloudEndPoint = mDatabase.child("Discussion");
-
+                    nlayout.setVisibility(View.VISIBLE);
+                }
+                if(radioRoleButton1.getText().toString().equals(getResources().getString(R.string.teacher)))
+                {
+                    nlayout.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
 
         bt_SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,10 +117,37 @@ public class MainActivity extends AppCompatActivity {
                 String password = String.valueOf(et_Password.getText());
                 int selectedId = radioRoleGroup.getCheckedRadioButtonId();
                 radioRoleButton = (RadioButton) findViewById(selectedId);
-                auth.createUserWithEmailAndPassword(email, password);
+                if ((email.equals(""))||(email==null)) {
+                    Toast.makeText(getApplication(), "Please enter an E-mail ID", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(password==null)
+                {
+                    Toast.makeText(getApplication(), "Please enter a password", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(password.length()<6)
+                {
+                    Toast.makeText(getApplication(), "Please enter a password with a length of more than 6 characters", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
 
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Authentication failed.the mail Id has already been registered." ,
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getBaseContext(),R.string.account_created,
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
 
-                //teacherCloudEndPoint.setValue(teachValues);
                 if(radioRoleButton.getText().equals("Teacher"))
                 {
                     Teachervalues teachValues=new Teachervalues();
@@ -84,48 +157,33 @@ public class MainActivity extends AppCompatActivity {
                     DatabaseReference tempCloudEndPoint;
                     tempCloudEndPoint = teacherCloudEndPoint.child(email.split("@")[0]);
                 }
-                Toast.makeText(getBaseContext(), "Done",
-                        Toast.LENGTH_LONG).show();
-
-
             }
         });
-
-
 
         bt_SignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String email = String.valueOf(et_Username.getText());
-                String password = String.valueOf(et_Password.getText());
+                final String password = String.valueOf(et_Password.getText());
                 int selectedId = radioRoleGroup.getCheckedRadioButtonId();
                 radioRoleButton = (RadioButton) findViewById(selectedId);
+                final String teachermailID = String.valueOf(teacherName.getText());
                 final CharSequence role=radioRoleButton.getText();
-                auth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
-
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-
-                                if (!task.isSuccessful()) {
-                                    // there was an error
-                                    Toast.makeText(getBaseContext(), "Try Again",
-                                            Toast.LENGTH_LONG).show();
-                                } else {
-                                    if((role.equals("Teacher")&&(checkTeacher(email,role)))||(radioRoleButton.getText().equals("Student")&&!(checkTeacher(email,role))))
-                                    {
-                                        Toast.makeText(getBaseContext(), "Gall",
-                                                Toast.LENGTH_LONG).show();
-                                        Intent intent = new Intent(getBaseContext(),ClassAndTeachers.class);
-                                        intent.putExtra("String",radioRoleButton.getText());
-                                        startActivity(intent);
-                                        finish();
-                                    }
-
-                                }
-
-                            }
-                        });
+                if ((email==null)||(email.equals(""))) {
+                    Toast.makeText(getApplication(), "Please enter an E-mail ID", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(password==null)
+                {
+                    Toast.makeText(getApplication(), "Please enter a password", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(password.length()<6)
+                {
+                    Toast.makeText(getApplication(), "Please enter a password with a length of more than 6 characters", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                authentication(email,password,role.toString(),teachermailID);
 
             }
         });
@@ -136,34 +194,51 @@ public class MainActivity extends AppCompatActivity {
 
                 String email = String.valueOf(et_Username.getText()).toString().trim();
 
-                if (email.equals("")) {
-                    Toast.makeText(getApplication(), "Enter your registered email id to reset password", Toast.LENGTH_SHORT).show();
+                if ((email.equals(""))||(email==null)) {
+                    Toast.makeText(getApplication(), R.string.reg_mail_id_needed, Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-
                 auth.sendPasswordResetEmail(email)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(getApplicationContext(), "We have sent you instructions to reset your password!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), R.string.instructions_sent, Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "Failed to send reset email!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), R.string.failed_to_send, Toast.LENGTH_SHORT).show();
                                 }
-
-
                             }
                         });
             }
         });
-
     }
 
     private boolean checkTeacher(String email,CharSequence role)
     {
+
+        if((teacherList.contains(email)))
+        {
+            if(email.equals(auth.getCurrentUser().getEmail())&&((role.equals(getResources().getString(R.string.student))))) {
+                Toast.makeText(getBaseContext(), R.string.login_as_teacher,
+                        Toast.LENGTH_LONG).show();
+            }
+
+            return true;
+        }
+        if(role.equals(getResources().getString(R.string.teacher))) {
+            Toast.makeText(getBaseContext(), R.string.not_a_teacher,
+                    Toast.LENGTH_LONG).show();
+        }
+        return false;
+
+    }
+
+
+
+    public void teacherlist()
+    {
         DatabaseReference listCloudEndPoint;
-        listCloudEndPoint = mDatabase.child("TeachersList");
+        listCloudEndPoint = mDatabase.child(getResources().getString(R.string.teacherslist));
 
         listCloudEndPoint.addValueEventListener(new ValueEventListener() {
             @Override
@@ -177,28 +252,132 @@ public class MainActivity extends AppCompatActivity {
                 }
             } @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getBaseContext(), "There seems to be an issue with the database.Please try later",
+                Toast.makeText(getBaseContext(), R.string.database_issue,
                         Toast.LENGTH_LONG).show();
-                Log.d("Checkless", databaseError.getMessage());
             }
         });
-        Log.v("Please",role.toString());
-        if(teacherList.contains(email))
-        {
-            Log.v("Please",role.toString());
-            if(role.equals("Student"))
-            {
-                Toast.makeText(getBaseContext(), "You are a Teacher. Please login as a teacher",
-                        Toast.LENGTH_LONG).show();
-
-            }
-            return true;
-        }
-
-        Toast.makeText(getBaseContext(), "You are not a Teacher.",
-                Toast.LENGTH_LONG).show();
-        return false;
 
     }
+    private boolean networkUp() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(this);
+    }
+
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+         statusDisplay(isConnected);
+    }
+
+    private void statusDisplay(boolean isConnected) {
+        if(!(isConnected)) {
+            Toast.makeText(getApplication(), "There seems to be a connectivity issue. Please check your connectivity.", Toast.LENGTH_SHORT).show();
+        }
+        }
+    private void checkConnection() {
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        statusDisplay(isConnected);
+    }
+
+    public void authentication(final String email,final String password,final String role,final String teachermailID)
+    {
+        progressBar.setVisibility(View.VISIBLE);
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        if (!task.isSuccessful()) {
+                            // there was an error
+                            Toast.makeText(getBaseContext(), R.string.login_incorrect,
+                                    Toast.LENGTH_LONG).show();
+                        } else {
+                            if((role.equals(getResources().getString(R.string.teacher))&&(checkTeacher(email,role))))
+                            {
+                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                editor.putString("Email",auth.getCurrentUser().getEmail().split("@")[0] );
+                                editor.putString("User",email);
+                                editor.putString("Password",password);
+                                editor.putString("Role",role);
+                                editor.putString("TmailID","none");
+                                editor.commit();
+                                Intent intent = new Intent(getBaseContext(),ClassAndTeachers.class);
+                                intent.putExtra("String",radioRoleButton.getText());
+                                startActivity(intent);
+                                finish();
+                            }
+                            else if(role.equals(getResources().getString(R.string.student))&&!(checkTeacher(email,role)))
+                            {
+                                if (!(teachermailID.equals(""))&&(!(teachermailID==null))&&(checkTeacher(teachermailID,role)))
+                                {
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString("Email",teachermailID.split("@")[0] );
+                                    editor.putString("User",email);
+                                    editor.putString("Password",password);
+                                    editor.putString("Role",role);
+                                    editor.putString("TmailID",teachermailID);
+                                    editor.commit();
+                                    Intent intent = new Intent(getBaseContext(),ClassAndTeachers.class);
+                                    intent.putExtra("String",radioRoleButton.getText());
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else
+                                {
+                                    Toast.makeText(getBaseContext(), "There is no such teacher",
+                                            Toast.LENGTH_LONG).show();
+                                }
+
+                            }
+
+                        }
+
+                    }
+                });
+    }
+
+    public void autoAuthentication() {
+
+        final String email = sharedpreferences.getString("User", null);
+        if (email != null) {
+            String password = sharedpreferences.getString("Password", null);
+            final String teachermail = sharedpreferences.getString("TmailID", null);
+
+            auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+
+
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressBar.setVisibility(View.VISIBLE);
+
+                            if (teachermail.equals("none")) {
+                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                editor.putString("Email", email.split("@")[0]);
+                                editor.commit();
+                            } else {
+                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                editor.putString("Email", teachermail.split("@")[0]);
+                                editor.commit();
+                            }
+
+                            Intent intent = new Intent(getBaseContext(), ClassAndTeachers.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+        }
+    }
+
 
 }

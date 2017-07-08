@@ -26,8 +26,8 @@ public class discussionAdapter extends FirebaseRecyclerAdapter<DiscussionboardVa
 
     @Override
     protected void populateViewHolder(DiscussionValuesAdapterHolder viewHolder, DiscussionboardValues model, int position) {
-        viewHolder.answer.setText(model.answer);
-        viewHolder.question.setText(model.question);
+        viewHolder.answer.setText("Answer: "+model.answer);
+        viewHolder.question.setText("Question: "+model.question);
         final String quest=model.question;
         final String ans=model.answer;
         final String id=model.id;

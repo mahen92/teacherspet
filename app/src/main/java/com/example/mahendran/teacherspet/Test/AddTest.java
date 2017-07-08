@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.mahendran.teacherspet.R;
 import com.example.mahendran.teacherspet.StudentDatabase.StudentValues;
@@ -36,9 +37,10 @@ public class AddTest extends AppCompatActivity {
     public Map<String,String> testMap=new HashMap<String,String>();
     private StudentValues sv;
     private EditText marks;
-    private EditText comments;
+    private TextView stname;
     String key;
     String test;
+    String studentName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +50,13 @@ public class AddTest extends AppCompatActivity {
         Intent intent=getIntent();
         key= intent.getStringExtra("Key");
         test= intent.getStringExtra("TestName");
+        studentName= getIntent().getStringExtra("StudentName");
         setSupportActionBar(toolbar);
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String email=pref.getString("Email", null);
         String className=pref.getString("class", null);
+        stname=(TextView)findViewById(R.id.st_name);
+        stname.setText(studentName);
         mDatabase =  FirebaseDatabase.getInstance().getReference();
         teacherCloudEndPoint = mDatabase.child("Teachers");
         classTeacherCloudEndPoint = teacherCloudEndPoint.child(email);
@@ -72,10 +77,8 @@ public class AddTest extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
                 marks = (EditText) findViewById(R.id.test_marks);
-                comments = (EditText) findViewById(R.id.comments);
 
                 sv.map.put(test,(String.valueOf(marks.getText())));
                 tempCloudEndPoint.setValue(sv);

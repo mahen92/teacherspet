@@ -36,12 +36,12 @@ public class testsAdapter extends FirebaseRecyclerAdapter<TestValues, TestValueA
     @Override
     protected void populateViewHolder(final TestValueAdapterHolder viewHolder, TestValues model, int position) {
         viewHolder.className.setText(model.testName);
-        final String className=model.testName;
+        final String test=model.testName;
         viewHolder.className.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context,testandassignmentcreate.class);
-                intent.putExtra("Class",className);
+                intent.putExtra("Test",test);
                 context.startActivity(intent);
 
             }

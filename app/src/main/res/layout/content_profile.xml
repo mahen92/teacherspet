@@ -12,67 +12,140 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.mahendran.teacherspet.profileActivity"
     tools:showIn="@layout/activity_profile">
-    <EditText
-        android:layout_width="wrap_content"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/name"
-        android:text="Levi"
-        android:focusable="false"/>
+        android:orientation="vertical"
+        android:padding="4dp">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/number"
-        android:text="777"
-        android:layout_below="@+id/name"
-        android:layout_alignLeft="@+id/parentnumber"
-        android:layout_alignStart="@+id/parentnumber"
-        android:layout_marginTop="54dp"
-        android:focusable="false"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:padding="6dp"
+            android:elevation="6dp">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/parentnumber"
-        android:text="888"
-        android:layout_below="@+id/number"
-        android:layout_alignRight="@+id/cgpa"
-        android:layout_alignEnd="@+id/cgpa"
-        android:layout_marginTop="45dp"
-        android:focusable="false"/>
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="?attr/selectableItemBackground"
+                android:hint="Enter Name"
+                android:gravity="left"
+                android:padding="3dp" />
+        </FrameLayout>
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/address"
-        android:text="Scouting Legion"
-        android:layout_below="@+id/parentnumber"
-        android:layout_alignLeft="@+id/parentnumber"
-        android:layout_alignStart="@+id/parentnumber"
-        android:layout_marginTop="58dp"
-        android:focusable="false"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:padding="6dp"
+            android:elevation="6dp">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/cgpa"
-        android:text="10"
-        android:layout_below="@+id/address"
-        android:layout_toRightOf="@+id/name"
-        android:layout_toEndOf="@+id/name"
-        android:layout_marginTop="35dp"
-        android:focusable="false"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/rank"
-        android:text="Cleanest"
-        android:layout_below="@+id/cgpa"
-        android:layout_alignLeft="@+id/address"
-        android:layout_alignStart="@+id/address"
-        android:layout_marginTop="49dp"
-        android:focusable="false"/>
+            <TextView
+                android:id="@+id/mail_id"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="?attr/selectableItemBackground"
+                android:hint="Enter mail ID"
+                android:gravity="left"
+                android:padding="3dp" />
+        </FrameLayout>
 
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:padding="6dp"
+            android:elevation="6dp">
+
+            <EditText
+                android:id="@+id/stud_ph"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="?attr/selectableItemBackground"
+                android:hint="Enter phone Number"
+                android:gravity="left"
+                android:padding="3dp" />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:padding="6dp"
+            android:elevation="6dp">
+
+            <EditText
+                android:id="@+id/parent_ph"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="?attr/selectableItemBackground"
+                android:hint="Enter Parent's/Guardians's Phone number "
+                android:gravity="left"
+                android:padding="3dp" />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:padding="6dp"
+            android:elevation="6dp">
+
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="?attr/selectableItemBackground"
+                android:hint="Enter Address"
+                android:focusable="false"
+                android:gravity="left"
+                android:padding="3dp" />
+        </FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:padding="6dp"
+            android:id="@+id/frame"
+            android:elevation="6dp">
+
+            <TextView
+                android:text="Test Name"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="left"
+                android:padding="3dp" />
+            <TextView
+                android:text="Marks"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="right"
+                android:padding="3dp" />
+        </FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:padding="6dp"
+            android:elevation="6dp">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00bfff"
+            android:id="@+id/profile_tests">
+
+        </ListView>
+        </FrameLayout>
+    </LinearLayout>
 </RelativeLayout>

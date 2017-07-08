@@ -3,6 +3,7 @@ package com.example.mahendran.teacherspet.ClassesAndTeachers;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,9 +19,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.mahendran.teacherspet.Connectivity.ConnectivityReceiver;
+import com.example.mahendran.teacherspet.Connectivity.MyApplication;
 import com.example.mahendran.teacherspet.DiscussionRoom.DiscussionValuesAdapterHolder;
 import com.example.mahendran.teacherspet.DiscussionRoom.DiscussionboardValues;
 import com.example.mahendran.teacherspet.DiscussionRoom.discussionAdapter;
+import com.example.mahendran.teacherspet.MainActivity;
 import com.example.mahendran.teacherspet.R;
 import com.example.mahendran.teacherspet.StudentDatabase.StudentValues;
 import com.example.mahendran.teacherspet.actionsscreen;
@@ -34,10 +38,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.zip.Inflater;
 
-public class ClassAndTeachers extends AppCompatActivity {
-    private DatabaseReference mDatabase;
-    private DatabaseReference teacherCloudEndPoint;
-    private DatabaseReference classCloudEndPoint;
+public class ClassAndTeachers extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
+    public DatabaseReference mDatabase;
+    public DatabaseReference teacherCloudEndPoint;
+    public DatabaseReference classCloudEndPoint;
     private FirebaseAuth auth;
     private LinearLayoutManager linearLayoutManager;
     SharedPreferences sharedpreferences;
@@ -61,32 +65,26 @@ public class ClassAndTeachers extends AppCompatActivity {
         setSupportActionBar(toolbar);
         auth = FirebaseAuth.getInstance();
         linearLayout= (LinearLayout) findViewById(R.id.add_class_layout);
-        golinearLayout= (LinearLayout) findViewById(R.id.get_class_student);
+
         getClass=(EditText)findViewById(R.id.get_class);
         className=(EditText)findViewById(R.id.class_name);
         teacherName=(EditText)findViewById(R.id.teacher_name);
         classAdd=(Button)findViewById(R.id.add_class_button);
-        goButton=(Button)findViewById(R.id.go_button);
         logout=(Button)findViewById(R.id.log_out);
         sharedpreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-
+        String email=sharedpreferences.getString("Email", null);
+        Intent intent = getIntent();
+        String id = intent.getStringExtra("String");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         mDatabase =  FirebaseDatabase.getInstance().getReference();
         teacherCloudEndPoint = mDatabase.child("Teachers");
         classCloudEndPoint=teacherCloudEndPoint.child(auth.getCurrentUser().getEmail().split("@")[0]);
-        Intent intent = getIntent();
-        String id = intent.getStringExtra("String");
 
-        if((id!=null)&&(id.equals("Teacher")))
+
+        if(((auth.getCurrentUser().getEmail().split("@")[0]).equals(email)))
         {
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString("Email",auth.getCurrentUser().getEmail().split("@")[0] );
-            editor.commit();
+
             linearLayout.setVisibility(View.VISIBLE);
-        }
-        if((id!=null)&&(id.equals("Student")))
-        {
-            golinearLayout.setVisibility(View.VISIBLE);
         }
 
         logout.setOnClickListener(new View.OnClickListener()
@@ -98,29 +96,10 @@ public class ClassAndTeachers extends AppCompatActivity {
                 auth.signOut();
                 Toast.makeText(getBaseContext(), "You have been logged out.",
                         Toast.LENGTH_LONG).show();
-                finish();
-            }
-        });
-
-        goButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-
-                String nameClass=String.valueOf(className.getText());
-                String nameTeacher=(String.valueOf(teacherName.getText()).split("@")[0]);
-                editor.putString("Email",nameTeacher);
-                editor.putString("class",nameClass);
+                editor.clear();
                 editor.commit();
-                ArrayList<StudentValues> studentObjectList=getStudentObjects(nameClass,nameTeacher);
-                if(checkInClass(studentObjectList)) {
-                    editor.putString("Email", (String.valueOf(teacherName.getText()).split("@")[0]));
-                    editor.putString("class", (String.valueOf(className.getText())));
-                    Intent intent = new Intent(getBaseContext(), actionsscreen.class);
-                    intent.putExtra("String", "Student");
-                    intent.putExtra("id",studentObjectList.get(0).studentName);
-                    startActivity(intent);
-                }
+                finish();
             }
         });
 
@@ -129,18 +108,20 @@ public class ClassAndTeachers extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ClassValues cv= new ClassValues();
-                ClassValues dv= new ClassValues();
+                //ClassValues dv= new ClassValues();
                 String classname=(String.valueOf(getClass.getText()));
-                dv.ClassId=classname;
-                cv.ClassId=classname;
+                //dv.ClassId=classname;
+                cv.setClassName(classname);
                 DatabaseReference tempCloudEndPoint;
                 tempCloudEndPoint=classCloudEndPoint.child(classname);
                 String key = tempCloudEndPoint.push().getKey();
                 tempCloudEndPoint.child(key).setValue(cv);
                 DatabaseReference tempClassCloudEndPoint;
+                DatabaseReference tempClassCloudEndPoint1;
                 tempClassCloudEndPoint=teacherCloudEndPoint.child(auth.getCurrentUser().getEmail().split("@")[0]);
-                String key1 = tempClassCloudEndPoint.push().getKey();
-                tempClassCloudEndPoint.child(key1).setValue(cv);
+                tempClassCloudEndPoint1=tempClassCloudEndPoint.child("Classes");
+                String key1 = tempClassCloudEndPoint1.push().getKey();
+                tempClassCloudEndPoint1.child(key1).setValue(cv);
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -149,15 +130,17 @@ public class ClassAndTeachers extends AppCompatActivity {
         RecyclerView gridView=(RecyclerView)findViewById(R.id.class_list_view);
 
         DatabaseReference tempClassCloudEndPoint;
-        tempClassCloudEndPoint=teacherCloudEndPoint.child(auth.getCurrentUser().getEmail().split("@")[0]);
-        ca= new ClassAdapter(ClassValues.class, R.layout.teachers_and_classes, ClassValueAdapterHolder.class, tempClassCloudEndPoint, this);
+        DatabaseReference tempClassCloudEndPoint1;
+
+        tempClassCloudEndPoint=teacherCloudEndPoint.child(email);
+        tempClassCloudEndPoint1=tempClassCloudEndPoint.child("Classes");
+        ca= new ClassAdapter(ClassValues.class, R.layout.teachers_and_classes, ClassValueAdapterHolder.class, tempClassCloudEndPoint1, this);
         gridView.setLayoutManager(linearLayoutManager);
         gridView.setAdapter(ca);
-
-
-
     }
-    private boolean inClass(String className,String teacher)
+
+
+    public ArrayList<StudentValues> getStudentObjects(String className,String teacher,String studName)
     {
         DatabaseReference mDatabase;
         DatabaseReference studentCloudEndPoint;
@@ -169,71 +152,26 @@ public class ClassAndTeachers extends AppCompatActivity {
         teacherCloudEndPoint = referenceClassCloudEndPoint.child(teacher);
         teacherClassCloudEndPoint = teacherCloudEndPoint.child(className);
         studentCloudEndPoint = teacherClassCloudEndPoint.child("Students");
-        studentCloudEndPoint.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot noteSnapshot: dataSnapshot.getChildren()){
-                            Log.v("Cheker","Running11");
-                            noteSnapshot.getKey();
-                            StudentValues note = noteSnapshot.getValue(StudentValues.class);
-                            Log.v("Chekerd",""+note.studentName);
-                            studentList.add(note.studentName);
-
-
-                        }
-                    }
-                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.d("Checkless", databaseError.getMessage());
-                    }
-                });
-        if(studentList.contains(auth.getCurrentUser().getEmail()))
-        {
-            return true;
-        }
-        Toast.makeText(getBaseContext(), "You are not allowed in this class.",
-                Toast.LENGTH_LONG).show();
-
-
-        return false;
-    }
-
-    private ArrayList<StudentValues> getStudentObjects(String className,String teacher)
-    {
-        DatabaseReference mDatabase;
-        DatabaseReference studentCloudEndPoint;
-        DatabaseReference teacherCloudEndPoint;
-        DatabaseReference teacherClassCloudEndPoint;
-        DatabaseReference referenceClassCloudEndPoint;
-        mDatabase =  FirebaseDatabase.getInstance().getReference();
-        referenceClassCloudEndPoint = mDatabase.child("Teachers");
-        teacherCloudEndPoint = referenceClassCloudEndPoint.child(teacher);
-        teacherClassCloudEndPoint = teacherCloudEndPoint.child(className);
-        studentCloudEndPoint = teacherClassCloudEndPoint.child("Students");
+        final String studentname=studName;
         studentCloudEndPoint.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot noteSnapshot: dataSnapshot.getChildren()){
-                    Log.v("Cheker","Running11");
                     noteSnapshot.getKey();
                     StudentValues note = noteSnapshot.getValue(StudentValues.class);
-                    Log.v("Chekerd",""+note.studentName);
-                    if(note.studentName.equals(auth.getCurrentUser().getEmail())) {
+                    if(note.studentName.equals(studentname)) {
                         studentObjectList.add(note);
                     }
-
-
                 }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.d("Checkless", databaseError.getMessage());
             }
         });
         return studentObjectList;
     }
 
-    private boolean checkInClass(ArrayList<StudentValues> sv)
+     public boolean checkInClass(ArrayList<StudentValues> sv)
     {
         if(sv.size()==0)
         {
@@ -254,4 +192,22 @@ public class ClassAndTeachers extends AppCompatActivity {
         return false;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ConnectivityReceiver receiver=new ConnectivityReceiver();
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(this);
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        statusDisplay(isConnected);
+    }
+    private void statusDisplay(boolean isConnected) {
+        if(!(isConnected)) {
+            Toast.makeText(getApplication(), "There seems to be a connectivity issue. Please check your connectivity.", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
+

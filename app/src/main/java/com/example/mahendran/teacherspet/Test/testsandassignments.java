@@ -16,14 +16,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.mahendran.teacherspet.ClassesAndTeachers.ClassValues;
 
 
+import com.example.mahendran.teacherspet.Connectivity.ConnectivityReceiver;
+import com.example.mahendran.teacherspet.Connectivity.MyApplication;
 import com.example.mahendran.teacherspet.R;
 import com.example.mahendran.teacherspet.StudentDatabase.FireBaseAdapter;
 import com.example.mahendran.teacherspet.StudentDatabase.FireBaseAdapterHolder;
 import com.example.mahendran.teacherspet.StudentDatabase.StudentValues;
+import com.example.mahendran.teacherspet.actionsscreen;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class testsandassignments extends AppCompatActivity {
+public class testsandassignments extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
     SharedPreferences sharedpreferences;
     EditText testName;
     Button classAdd;
@@ -82,4 +86,24 @@ public class testsandassignments extends AppCompatActivity {
         gridView.setAdapter(testAdapter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(this);
+    }
+
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        statusDisplay(isConnected);
+    }
+
+    private void statusDisplay(boolean isConnected) {
+        if(!(isConnected)) {
+            Toast.makeText(getApplication(), "There seems to be a connectivity issue. Please check your connectivity.", Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
 }

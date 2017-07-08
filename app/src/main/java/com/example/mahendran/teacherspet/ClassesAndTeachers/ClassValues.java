@@ -6,4 +6,18 @@ package com.example.mahendran.teacherspet.ClassesAndTeachers;
 
 public class ClassValues {
     public String ClassId;
+
+    public void  setClassName(String className)
+    {
+
+            ClassId = className;
+
+    }
+
+    public String getClassName()
+    {
+
+            return ClassId;
+
+    }
 }
