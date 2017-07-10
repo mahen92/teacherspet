@@ -33,44 +33,30 @@ public class ListProvider implements RemoteViewsService.RemoteViewsFactory {
     private DatabaseReference teacherCloudEndPoint;
     private DatabaseReference teacherClassCloudEndPoint;
     private DatabaseReference referenceClassCloudEndPoint;
-    private LinearLayoutManager linearLayoutManager;
     private ArrayList<ListItem> listItemList = new ArrayList();
-    private ArrayList<String> stringList = new ArrayList();
     private Context context = null;
     private int appWidgetId;
     Callback callback;
-    ArrayList<DiscussionboardValues> discussionList;
+    ArrayList<DiscussionboardValues> discussionList=new ArrayList<>();;
 
     public ListProvider(Context context, Intent intent,ArrayList<DiscussionboardValues> dv) {
         this.context = context;
         appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
-
-        //populateListItem();
+        populateListItem();
     }
 
     private void populateListItem() {
-        /*for (int i = 0; i < 10; i++) {
-            ListItem listItem = new ListItem();
-            stringList.add("Check");
-            listItem.heading = "Heading" + i;
-            listItem.content = i
-                    + " This is the content of the app widget listview.Nice content though";
-            listItemList.add(listItem);
-        }*/
-
       mDatabase =  FirebaseDatabase.getInstance().getReference();
         SharedPreferences pref = context.getSharedPreferences("MyPrefs", context.MODE_PRIVATE);
         String email=pref.getString("Email", null);
         String className=pref.getString("class", null);
         mDatabase =  FirebaseDatabase.getInstance().getReference();
-
-        mDatabase =  FirebaseDatabase.getInstance().getReference();
         referenceClassCloudEndPoint = mDatabase.child("Teachers");
         teacherCloudEndPoint = referenceClassCloudEndPoint.child(email);
         teacherClassCloudEndPoint = teacherCloudEndPoint.child(className);
         DiscussionboardCloudEndPoint = teacherClassCloudEndPoint.child("DiscussionBoard");
-        discussionList=new ArrayList<>();
+
 
 
         DiscussionboardCloudEndPoint.addValueEventListener(new ValueEventListener() {
@@ -83,7 +69,16 @@ public class ListProvider implements RemoteViewsService.RemoteViewsFactory {
                     discussionList.add(note);
 
                 }
-                callback.act(discussionList);
+
+                    try {
+                        callback.act(discussionList);
+                    }
+                    catch(NullPointerException n)
+                    {
+                        n.fillInStackTrace();
+                    }
+
+
             } @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(context, R.string.database_issue,
@@ -96,15 +91,17 @@ public class ListProvider implements RemoteViewsService.RemoteViewsFactory {
         callback=new Callback() {
             @Override
             public void act(ArrayList<DiscussionboardValues> models) {
-                //listItemList.clear();
+                listItemList.clear();
                 for(DiscussionboardValues dv:models)
                 {
 
                     ListItem lst=new ListItem();
-                    lst.content=dv.answer;
-                    lst.heading=dv.question;
+                    lst.content=dv.getAnswer();
+                    lst.heading=dv.getQuestion();
                     listItemList.add(lst);
+
                 }
+                discussionList.clear();
             }
         };
 
@@ -113,13 +110,12 @@ public class ListProvider implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public void onCreate() {
-       // populateListItem();
-
+        populateListItem();
     }
 
     @Override
     public void onDataSetChanged() {
-       // listItemList.clear();
+        populateListItem();
         populateListItem();
     }
 
@@ -152,9 +148,20 @@ public class ListProvider implements RemoteViewsService.RemoteViewsFactory {
     public RemoteViews getViewAt(int position) {
         final RemoteViews remoteView = new RemoteViews(
                 context.getPackageName(), R.layout.list_row);
-        ListItem listItem = listItemList.get(position);
-        remoteView.setTextViewText(R.id.answer, "Question: "+listItem.content);
-        remoteView.setTextViewText(R.id.question, "Answer: "+listItem.heading);
+        try {
+            ListItem listItem = listItemList.get(position);
+            remoteView.setTextViewText(R.id.answer, "Question: " + listItem.content);
+            remoteView.setTextViewText(R.id.question, "Answer: " + listItem.heading);
+        }
+        catch(ArrayIndexOutOfBoundsException e)
+        {
+            e.fillInStackTrace();
+        }
+        catch(IndexOutOfBoundsException i)
+        {
+            populateListItem();
+            i.fillInStackTrace();
+        }
 
         return remoteView;
     }

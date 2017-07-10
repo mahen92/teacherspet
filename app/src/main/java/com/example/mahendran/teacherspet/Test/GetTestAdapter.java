@@ -2,26 +2,10 @@ package com.example.mahendran.teacherspet.Test;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.mahendran.teacherspet.R;
-import com.example.mahendran.teacherspet.StudentDatabase.FireBaseAdapterHolder;
 import com.example.mahendran.teacherspet.StudentDatabase.StudentValues;
-import com.example.mahendran.teacherspet.Test.TestValueAdapterHolder;
-import com.example.mahendran.teacherspet.profileActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
-
-import java.util.ArrayList;
 
 /**
  * Created by Mahendran on 07-06-2017.
@@ -40,13 +24,12 @@ public class GetTestAdapter extends FirebaseRecyclerAdapter<StudentValues, GetTe
 
     @Override
     protected void populateViewHolder(GetTestAdapterHolder viewHolder, final StudentValues model, int position) {
-        Log.v("Firebaser","adapeter");
-        viewHolder.name.setText(model.studentName);
-        final String stname=model.studentName;
+        viewHolder.name.setText(model.getEmailID());
+        final String stname=model.getEmailID();
         if(model.map.containsKey(testName)) {
             viewHolder.marks.setText(model.map.get(testName));
         }
-        final String key=model.id;
+        final String key=model.getId();
 
         viewHolder.name.setOnClickListener(new View.OnClickListener() {
             @Override

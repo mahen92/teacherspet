@@ -15,12 +15,9 @@ public class GetTestAdapterHolder extends RecyclerView.ViewHolder {
     private static final String TAG = FireBaseAdapterHolder.class.getSimpleName();
     public TextView name;
     public TextView marks;
-
     public GetTestAdapterHolder(View itemView) {
         super(itemView);
         name = (TextView) itemView.findViewById(R.id.stud_name);
         marks = (TextView) itemView.findViewById(R.id.marks);
-
-
     }
 }

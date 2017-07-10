@@ -3,10 +3,8 @@ package com.example.mahendran.teacherspet.StudentDatabase;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -53,19 +51,19 @@ public class addStudent extends AppCompatActivity implements ConnectivityReceive
 
                 if((mailID==null)||(studname==null)||(mailID.equals(""))||(studname.equals("")))
                 {
-                    Toast.makeText(getBaseContext(), "Please enter name and mail ID.",
+                    Toast.makeText(getBaseContext(), R.string.enter_name_and_email,
                             Toast.LENGTH_LONG).show();
 
                 }
                 else
                 {
                     StudentValues sv=new StudentValues();
-                    sv.studentName=(String.valueOf(stname.getText()));
-                    sv.emailID=(String.valueOf(pwd.getText()));
+                    sv.setStudentName(String.valueOf(stname.getText()));
+                    sv.setEmailID(String.valueOf(pwd.getText()));
                     String key = studentCloudEndPoint.push().getKey();
-                    sv.id=(key);
+                    sv.setId(key);
                     studentCloudEndPoint.child(key).setValue(sv);
-                    Toast.makeText(getBaseContext(), "Student Added",
+                    Toast.makeText(getBaseContext(),R.string.student_added,
                             Toast.LENGTH_LONG).show();
                 }
 
@@ -76,7 +74,6 @@ public class addStudent extends AppCompatActivity implements ConnectivityReceive
 
     protected void onResume() {
         super.onResume();
-        // register connection status listener
         MyApplication.getInstance().setConnectivityListener(this);
     }
 
@@ -88,7 +85,7 @@ public class addStudent extends AppCompatActivity implements ConnectivityReceive
 
     private void statusDisplay(boolean isConnected) {
         if(!(isConnected)) {
-            Toast.makeText(getApplication(), "There seems to be a connectivity issue. Please check your connectivity.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), R.string.connectrivity_issue, Toast.LENGTH_SHORT).show();
         }
     }
 

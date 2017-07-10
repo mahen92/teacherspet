@@ -3,11 +3,7 @@ package com.example.mahendran.teacherspet.ClassesAndTeachers;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.View;
-
-import com.example.mahendran.teacherspet.DiscussionRoom.StudentDiscussionBoard;
-import com.example.mahendran.teacherspet.StudentDatabase.FireBaseAdapter;
 import com.example.mahendran.teacherspet.actionsscreen;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -19,7 +15,6 @@ import com.google.firebase.database.DatabaseReference;
 public class ClassAdapter extends FirebaseRecyclerAdapter<ClassValues, ClassValueAdapterHolder> {
     private static final String TAG = ClassAdapter.class.getSimpleName();
     private Context context;
-    SharedPreferences sharedpreferences;
 
     public ClassAdapter(Class<ClassValues> modelClass, int modelLayout, Class<ClassValueAdapterHolder> viewHolderClass, DatabaseReference ref, Context context) {
         super(modelClass, modelLayout, viewHolderClass, ref);
@@ -30,10 +25,8 @@ public class ClassAdapter extends FirebaseRecyclerAdapter<ClassValues, ClassValu
     @Override
     protected void populateViewHolder(final ClassValueAdapterHolder viewHolder, ClassValues model, int position) {
 
-
-            viewHolder.className.setText(model.getClassName());
-
-            final String className = model.ClassId;
+        viewHolder.className.setText(model.getClassName());
+        final String className = model.ClassId;
             viewHolder.className.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

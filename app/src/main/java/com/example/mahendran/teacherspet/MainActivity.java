@@ -1,6 +1,5 @@
 package com.example.mahendran.teacherspet;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +9,6 @@ import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -22,10 +20,8 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.mahendran.teacherspet.ClassesAndTeachers.ClassAndTeachers;
-import com.example.mahendran.teacherspet.ClassesAndTeachers.ClassValues;
 import com.example.mahendran.teacherspet.Connectivity.ConnectivityReceiver;
 import com.example.mahendran.teacherspet.Connectivity.MyApplication;
-import com.example.mahendran.teacherspet.StudentDatabase.StudentValues;
 import com.example.mahendran.teacherspet.firebase.Teachervalues;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -60,11 +56,11 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     private RadioButton radioRoleButton;
     private ProgressBar progressBar;
     private ArrayList<String> teacherList=new ArrayList<String>();
-    static int count=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         auth = FirebaseAuth.getInstance();
-        sharedpreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        sharedpreferences = getSharedPreferences(String.valueOf(R.string.MyPrefs), Context.MODE_PRIVATE);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -94,7 +90,6 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // checkedId is the RadioButton selected
                 RadioButton radioRoleButton1;
                 int selectedId1 = radioRoleGroup.getCheckedRadioButtonId();
                 radioRoleButton1 = (RadioButton) findViewById(selectedId1);
@@ -117,18 +112,18 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                 String password = String.valueOf(et_Password.getText());
                 int selectedId = radioRoleGroup.getCheckedRadioButtonId();
                 radioRoleButton = (RadioButton) findViewById(selectedId);
-                if ((email.equals(""))||(email==null)) {
-                    Toast.makeText(getApplication(), "Please enter an E-mail ID", Toast.LENGTH_SHORT).show();
+                if ((email==null)||(email.equals(""))) {
+                    Toast.makeText(getApplication(), R.string.email_required, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(password==null)
                 {
-                    Toast.makeText(getApplication(), "Please enter a password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), R.string.password_required, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(password.length()<6)
                 {
-                    Toast.makeText(getApplication(), "Please enter a password with a length of more than 6 characters", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), R.string.password_required, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
@@ -139,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Authentication failed.the mail Id has already been registered." ,
+                            Toast.makeText(getApplicationContext(), R.string.authentication_failed ,
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getBaseContext(),R.string.account_created,
@@ -151,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                 if(radioRoleButton.getText().equals("Teacher"))
                 {
                     Teachervalues teachValues=new Teachervalues();
-                    teachValues.teacherId=email;
+                    teachValues.setTeacherId(email);
                     String key = listCloudEndPoint.push().getKey();
                     listCloudEndPoint.child(key).setValue(teachValues);
                     DatabaseReference tempCloudEndPoint;
@@ -170,17 +165,17 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                 final String teachermailID = String.valueOf(teacherName.getText());
                 final CharSequence role=radioRoleButton.getText();
                 if ((email==null)||(email.equals(""))) {
-                    Toast.makeText(getApplication(), "Please enter an E-mail ID", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), R.string.email_required, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(password==null)
                 {
-                    Toast.makeText(getApplication(), "Please enter a password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), R.string.password_required, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(password.length()<6)
                 {
-                    Toast.makeText(getApplication(), "Please enter a password with a length of more than 6 characters", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), R.string.password_length, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 authentication(email,password,role.toString(),teachermailID);
@@ -192,9 +187,9 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
             @Override
             public void onClick(View v) {
 
-                String email = String.valueOf(et_Username.getText()).toString().trim();
+                String email = et_Username.getText().toString().trim();
 
-                if ((email.equals(""))||(email==null)) {
+                if ((email==null)||(email.equals(""))) {
                     Toast.makeText(getApplication(), R.string.reg_mail_id_needed, Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -221,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
             if(email.equals(auth.getCurrentUser().getEmail())&&((role.equals(getResources().getString(R.string.student))))) {
                 Toast.makeText(getBaseContext(), R.string.login_as_teacher,
                         Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.INVISIBLE);
             }
 
             return true;
@@ -228,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         if(role.equals(getResources().getString(R.string.teacher))) {
             Toast.makeText(getBaseContext(), R.string.not_a_teacher,
                     Toast.LENGTH_LONG).show();
+            progressBar.setVisibility(View.INVISIBLE);
         }
         return false;
 
@@ -247,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
                     noteSnapshot.getKey();
                     Teachervalues note = noteSnapshot.getValue(Teachervalues.class);
-                    teacherList.add(note.teacherId);
+                    teacherList.add(note.getTeacherId());
 
                 }
             } @Override
@@ -280,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
     private void statusDisplay(boolean isConnected) {
         if(!(isConnected)) {
-            Toast.makeText(getApplication(), "There seems to be a connectivity issue. Please check your connectivity.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), R.string.connectrivity_issue, Toast.LENGTH_SHORT).show();
         }
         }
     private void checkConnection() {
@@ -301,6 +298,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                             // there was an error
                             Toast.makeText(getBaseContext(), R.string.login_incorrect,
                                     Toast.LENGTH_LONG).show();
+                            progressBar.setVisibility(View.INVISIBLE);
                         } else {
                             if((role.equals(getResources().getString(R.string.teacher))&&(checkTeacher(email,role))))
                             {
@@ -334,8 +332,9 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                                 }
                                 else
                                 {
-                                    Toast.makeText(getBaseContext(), "There is no such teacher",
+                                    Toast.makeText(getBaseContext(), R.string.no_such_teacher,
                                             Toast.LENGTH_LONG).show();
+                                    progressBar.setVisibility(View.INVISIBLE);
                                 }
 
                             }

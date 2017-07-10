@@ -4,13 +4,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mahendran.teacherspet.R;
 import com.example.mahendran.teacherspet.StudentDatabase.StudentValues;
@@ -20,9 +19,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 public class AddTest extends AppCompatActivity {
 
@@ -32,9 +28,6 @@ public class AddTest extends AppCompatActivity {
     private DatabaseReference classCloudEndPoint;
     private DatabaseReference studentCloudEndPoint;
     private DatabaseReference tempCloudEndPoint;
-    private DatabaseReference tempCloudEndPoint1;
-    private DatabaseReference tempCloudEndPoint2;
-    public Map<String,String> testMap=new HashMap<String,String>();
     private StudentValues sv;
     private EditText marks;
     private TextView stname;
@@ -77,11 +70,11 @@ public class AddTest extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 marks = (EditText) findViewById(R.id.test_marks);
-
                 sv.map.put(test,(String.valueOf(marks.getText())));
                 tempCloudEndPoint.setValue(sv);
+                Toast.makeText(getBaseContext(), R.string.updated,
+                        Toast.LENGTH_LONG).show();
 
             }
         });

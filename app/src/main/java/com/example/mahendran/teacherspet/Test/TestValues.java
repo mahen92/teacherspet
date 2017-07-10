@@ -8,5 +8,13 @@ import java.util.Map;
  */
 
 public class TestValues {
-    public String testName;
+    private String testName;
+
+    public String getTestName() {
+        return testName;
+    }
+
+    public void setTestName(String testName) {
+        this.testName = testName;
+    }
 }

@@ -34,9 +34,6 @@ public class profileActivity extends AppCompatActivity {
     EditText studentPh;
     EditText parentPh;
     EditText address;
-
-    String g="Initial";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,11 +61,11 @@ public class profileActivity extends AppCompatActivity {
         if (b != null)
         {
             note =(StudentValues) b.getSerializable("Object");
-            mailID.setText(note.studentName);
-            name1.setText(note.emailID);
-            parentPh.setText(note.parentph);
-            studentPh.setText(note.studentph);
-            address.setText(note.address);
+            mailID.setText(note.getStudentName());
+            name1.setText(note.getEmailID());
+            parentPh.setText(note.getParentph());
+            studentPh.setText(note.getStudentph());
+            address.setText(note.getAddress());
 
         }
 
@@ -76,16 +73,14 @@ public class profileActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tempCloudEndPoint=studentCloudEndPoint.child(note.id);
-                note.studentName=(String.valueOf(mailID.getText()));
-                note.emailID=(String.valueOf(name1.getText()));
-                note.parentph=(String.valueOf(parentPh.getText()));
-                note.studentph=(String.valueOf(studentPh.getText()));
-                note.address=(String.valueOf(address.getText()));
+                tempCloudEndPoint=studentCloudEndPoint.child(note.getId());
+                note.setStudentName(String.valueOf(mailID.getText()));
+                note.setEmailID(String.valueOf(name1.getText()));
+                note.setParentph(String.valueOf(parentPh.getText()));
+                note.setStudentph(String.valueOf(studentPh.getText()));
+                note.setAddress(String.valueOf(address.getText()));
                 tempCloudEndPoint.setValue(note);
-                Toast.makeText(getApplication(), "Profile Updated", Toast.LENGTH_SHORT).show();
-
-
+                Toast.makeText(getApplication(),R.string.updated, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -95,9 +90,9 @@ public class profileActivity extends AppCompatActivity {
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    deleteCloudEndPoint = studentCloudEndPoint.child(note.id);
+                    deleteCloudEndPoint = studentCloudEndPoint.child(note.getId());
                     deleteCloudEndPoint.removeValue();
-                    Toast.makeText(getApplication(), "Profile Deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), R.string.deleted, Toast.LENGTH_SHORT).show();
                     finish();
                 }
             });
@@ -106,11 +101,5 @@ public class profileActivity extends AppCompatActivity {
         MyAdapter adapter = new MyAdapter(note.map);
         ListView profileTestView=(ListView)findViewById(R.id.profile_tests);
         profileTestView.setAdapter(adapter);
-
-
     }
-
-
-
-
 }

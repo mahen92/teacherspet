@@ -1,40 +1,23 @@
 package com.example.mahendran.teacherspet.Test;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
-
-import com.example.mahendran.teacherspet.ClassesAndTeachers.ClassValues;
-
-
 import com.example.mahendran.teacherspet.Connectivity.ConnectivityReceiver;
 import com.example.mahendran.teacherspet.Connectivity.MyApplication;
 import com.example.mahendran.teacherspet.R;
-import com.example.mahendran.teacherspet.StudentDatabase.FireBaseAdapter;
-import com.example.mahendran.teacherspet.StudentDatabase.FireBaseAdapterHolder;
-import com.example.mahendran.teacherspet.StudentDatabase.StudentValues;
-import com.example.mahendran.teacherspet.actionsscreen;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class testsandassignments extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
     SharedPreferences sharedpreferences;
@@ -71,10 +54,10 @@ public class testsandassignments extends AppCompatActivity implements Connectivi
             public void onClick(View view) {
                 TestValues cv= new TestValues();
                 String name=(String.valueOf(testName.getText()));
-                cv.testName=name;
+                cv.setTestName(name);
                 String key = testCloudEndPoint.push().getKey();
                 testCloudEndPoint.child(key).setValue(cv);
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, R.string.test_added, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -89,7 +72,6 @@ public class testsandassignments extends AppCompatActivity implements Connectivi
     @Override
     protected void onResume() {
         super.onResume();
-        // register connection status listener
         MyApplication.getInstance().setConnectivityListener(this);
     }
 
@@ -101,7 +83,7 @@ public class testsandassignments extends AppCompatActivity implements Connectivi
 
     private void statusDisplay(boolean isConnected) {
         if(!(isConnected)) {
-            Toast.makeText(getApplication(), "There seems to be a connectivity issue. Please check your connectivity.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), R.string.connectrivity_issue, Toast.LENGTH_SHORT).show();
         }
 
 

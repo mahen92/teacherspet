@@ -20,17 +20,12 @@ public class customAdapter extends ArrayAdapter {
     private Context context;
     private LayoutInflater inflater;
     ArrayList<String> imageUrls1;
-    String[] images;
 
     public customAdapter(Context context, ArrayList<String> imageUrls) {
         super(context, R.layout.student_list_content, imageUrls);
-
         this.context=context;
         imageUrls1=imageUrls;
-
         inflater=LayoutInflater.from(context);
-
-
     }
     public long getItemId(int position)
     {
@@ -38,21 +33,14 @@ public class customAdapter extends ArrayAdapter {
     }
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        Log.v("Test","Alohamora");
         if (null == convertView) {
             convertView = inflater.inflate(R.layout.student_list_content, parent, false);
         }
         if((imageUrls1.size()!=0)&&(imageUrls1!=null)) {
 
             TextView title = (TextView)convertView.findViewById(R.id.student);
-            Log.v("Tesalt",imageUrls1.get(position));
             title.setText("Patch");
-            //Picasso.with(context).load("http://image.tmdb.org/t/p/w185/"+images[position]).fit().into((ImageView) convertView);
-
-
         }
-
-
         return convertView;
     }
 }

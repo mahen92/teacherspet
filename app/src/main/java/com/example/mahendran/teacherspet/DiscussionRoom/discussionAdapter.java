@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 
+import com.example.mahendran.teacherspet.R;
 import com.example.mahendran.teacherspet.StudentDatabase.FireBaseAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -26,14 +27,11 @@ public class discussionAdapter extends FirebaseRecyclerAdapter<DiscussionboardVa
 
     @Override
     protected void populateViewHolder(DiscussionValuesAdapterHolder viewHolder, DiscussionboardValues model, int position) {
-        viewHolder.answer.setText("Answer: "+model.answer);
-        viewHolder.question.setText("Question: "+model.question);
-        final String quest=model.question;
-        final String ans=model.answer;
-        final String id=model.id;
-        if(teacher!=null) {
-            Log.v("Checkers", teacher);
-        }
+        viewHolder.answer.setText("Answer :"+model.getAnswer());
+        viewHolder.question.setText("Question :"+model.getQuestion());
+        final String quest=model.getQuestion();
+        final String ans=model.getAnswer();
+        final String id=model.getId();
         if(teacher=="t") {
         viewHolder.answer.setOnClickListener(new View.OnClickListener() {
             @Override

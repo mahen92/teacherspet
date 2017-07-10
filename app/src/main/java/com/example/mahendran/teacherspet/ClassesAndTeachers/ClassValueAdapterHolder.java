@@ -13,12 +13,9 @@ import com.example.mahendran.teacherspet.R;
 public class ClassValueAdapterHolder extends RecyclerView.ViewHolder {
 
 private static final String TAG = ClassValueAdapterHolder.class.getSimpleName();
-
     public TextView className;
-public ClassValueAdapterHolder(View itemView) {
+     public ClassValueAdapterHolder(View itemView) {
         super(itemView);
     className = (TextView) itemView.findViewById(R.id.class_name);
-
-
-        }
+     }
 }

@@ -3,19 +3,15 @@ package com.example.mahendran.teacherspet.DiscussionRoom;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mahendran.teacherspet.Connectivity.ConnectivityReceiver;
 import com.example.mahendran.teacherspet.Connectivity.MyApplication;
 import com.example.mahendran.teacherspet.R;
-import com.example.mahendran.teacherspet.Test.TestValues;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -47,13 +43,12 @@ public class StudentDiscussionBoard extends AppCompatActivity implements Connect
         teacherClassCloudEndPoint = teacherCloudEndPoint.child(className);
         DiscussionboardCloudEndPoint = teacherClassCloudEndPoint.child("DiscussionBoard");
         from=getIntent().getStringExtra("from");
-        final String quest=getIntent().getStringExtra("question");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         FloatingActionButton delete = (FloatingActionButton) findViewById(R.id.delete_button);
         answer = (EditText) findViewById(R.id.answer_by_teacher);
         question = (EditText) findViewById(R.id.Question_from_student);
-        String teacherAnswer="";
-        String studentQuestion="";
+        String teacherAnswer;
+        String studentQuestion;
 
         teacherAnswer=getIntent().getStringExtra("answer");
         studentQuestion=getIntent().getStringExtra("question");
@@ -71,9 +66,9 @@ public class StudentDiscussionBoard extends AppCompatActivity implements Connect
 
 
                 DiscussionboardValues dv=new DiscussionboardValues();
-                dv.answer=(String.valueOf(answer.getText()));
-                dv.question=(String.valueOf(question.getText()));
-                String key="";
+                dv.setAnswer(String.valueOf(answer.getText()));
+                dv.setQuestion(String.valueOf(question.getText()));
+                String key;
                 if(id==null) {
                     key = DiscussionboardCloudEndPoint.push().getKey();
                 }
@@ -81,9 +76,9 @@ public class StudentDiscussionBoard extends AppCompatActivity implements Connect
                 {
                     key=id;
                 }
-                dv.id=key;
+                dv.setId(key);
                 DiscussionboardCloudEndPoint.child(key).setValue(dv);
-                Toast.makeText(getApplication(), "Updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplication(), R.string.updated, Toast.LENGTH_SHORT).show();
 
 
             }
@@ -92,7 +87,7 @@ public class StudentDiscussionBoard extends AppCompatActivity implements Connect
             @Override
             public void onClick(View view) {
                 DiscussionboardCloudEndPoint.child(id).removeValue();
-                Toast.makeText(getApplication(), "Deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplication(), R.string.deleted, Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -100,7 +95,6 @@ public class StudentDiscussionBoard extends AppCompatActivity implements Connect
 
     protected void onResume() {
         super.onResume();
-        // register connection status listener
         MyApplication.getInstance().setConnectivityListener(this);
     }
 
@@ -111,7 +105,7 @@ public class StudentDiscussionBoard extends AppCompatActivity implements Connect
 
     private void statusDisplay(boolean isConnected) {
         if(!(isConnected)) {
-            Toast.makeText(getApplication(), "There seems to be a connectivity issue. Please check your connectivity.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(),R.string.connectrivity_issue, Toast.LENGTH_SHORT).show();
         }
     }
 }

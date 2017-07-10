@@ -18,7 +18,8 @@
         android:elevation="6dp">
 
         <TextView
-            android:text="Student Name"
+            android:text="@string/Student_Name"
+            android:contentDescription="@string/Student_Name"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="?attr/selectableItemBackground"
@@ -27,7 +28,8 @@
             android:padding="3dp"
             android:id="@+id/text1"/>
         <TextView
-            android:text="Marks"
+            android:text="@string/Marks"
+            android:contentDescription="@string/Marks"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="?attr/selectableItemBackground"

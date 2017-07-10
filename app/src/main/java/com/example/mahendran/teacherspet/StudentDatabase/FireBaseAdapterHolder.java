@@ -17,8 +17,5 @@ public class FireBaseAdapterHolder extends RecyclerView.ViewHolder{
     public FireBaseAdapterHolder(View itemView) {
         super(itemView);
         name = (TextView) itemView.findViewById(R.id.student);
-
-
-
     }
 }

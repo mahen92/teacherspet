@@ -18,6 +18,7 @@ import com.example.mahendran.teacherspet.Connectivity.MyApplication;
 import com.example.mahendran.teacherspet.R;
 import com.example.mahendran.teacherspet.Widget.WidgetProvider;
 import com.example.mahendran.teacherspet.actionsscreen;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +29,6 @@ import java.util.ArrayList;
 
 public class discussionroom extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
 
-    ArrayList<DiscussionboardValues> discussionValues=new ArrayList<DiscussionboardValues>();
     discussionAdapter ds;
     private DatabaseReference mDatabase;
     private DatabaseReference DiscussionboardCloudEndPoint;
@@ -37,8 +37,8 @@ public class discussionroom extends AppCompatActivity implements ConnectivityRec
     private DatabaseReference referenceClassCloudEndPoint;
     private LinearLayoutManager linearLayoutManager;
     ArrayList<DiscussionboardValues> discussionList;
-    String from="lash";
-    CallbacktoWidget callback;
+    String from="";
+    private FirebaseAuth auth;
 
 
     @Override
@@ -47,6 +47,7 @@ public class discussionroom extends AppCompatActivity implements ConnectivityRec
         setContentView(R.layout.activity_discussionroom);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        auth = FirebaseAuth.getInstance();
         mDatabase =  FirebaseDatabase.getInstance().getReference();
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String email=pref.getString("Email", null);
@@ -59,50 +60,15 @@ public class discussionroom extends AppCompatActivity implements ConnectivityRec
         teacherClassCloudEndPoint = teacherCloudEndPoint.child(className);
         DiscussionboardCloudEndPoint = teacherClassCloudEndPoint.child("DiscussionBoard");
         discussionList=new ArrayList<>();
-
-        callback=new CallbacktoWidget() {
-            @Override
-            public void act(ArrayList<DiscussionboardValues> models) {
-                Intent intent1 = new Intent(getApplicationContext(),WidgetProvider.class);
-                intent1.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-                int ids[] = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), WidgetProvider.class));
-
-                intent1.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
-                intent1.putExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS,discussionList);
-                sendBroadcast(intent1);
-            }
-        };
-
-        DiscussionboardCloudEndPoint.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot noteSnapshot: dataSnapshot.getChildren()){
-
-                    noteSnapshot.getKey();
-                    DiscussionboardValues note = noteSnapshot.getValue(DiscussionboardValues.class);
-                    discussionList.add(note);
-
-                }
-                callback.act(discussionList);
-            } @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getBaseContext(), R.string.database_issue,
-                        Toast.LENGTH_LONG).show();
-            }
-
-
-        });
-
-
-
-
+        Intent intent1 = new Intent(getApplicationContext(),WidgetProvider.class);
+        intent1.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        int ids[] = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), WidgetProvider.class));
+        intent1.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+        intent1.putExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS,discussionList);
+        sendBroadcast(intent1);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        Intent intent=getIntent();
-        String check=intent.getStringExtra("student");
-
-
-        if((check!=null)&&(check.equals("s")))
+        if(!((auth.getCurrentUser().getEmail().split("@")[0]).equals(email)))
         {
             fab.setVisibility(View.VISIBLE);
         }
@@ -117,9 +83,6 @@ public class discussionroom extends AppCompatActivity implements ConnectivityRec
                 startActivity(intent);
             }
         });
-        //DiscussionboardValues[] discussionArray=objects.toArray(new DiscussionboardValues[objects.size()]);
-
-        //ds=new discussionAdapter(getBaseContext(),discussionArray);
         RecyclerView gridView=(RecyclerView)findViewById(R.id.discussionlistview);
         linearLayoutManager = new LinearLayoutManager(this);
 
@@ -130,7 +93,6 @@ public class discussionroom extends AppCompatActivity implements ConnectivityRec
 
     protected void onResume() {
         super.onResume();
-        // register connection status listener
         MyApplication.getInstance().setConnectivityListener(this);
     }
 
@@ -142,12 +104,10 @@ public class discussionroom extends AppCompatActivity implements ConnectivityRec
 
     private void statusDisplay(boolean isConnected) {
         if(!(isConnected)) {
-            Toast.makeText(getApplication(), "There seems to be a connectivity issue. Please check your connectivity.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), R.string.connectrivity_issue, Toast.LENGTH_SHORT).show();
         }
     }
 
 }
 
-interface CallbacktoWidget {
-    void act(ArrayList<DiscussionboardValues> models);
-}
+

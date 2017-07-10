@@ -18,6 +18,7 @@
 
         <TextView
             android:id="@+id/question"
+            android:contentDescription="@string/Ask_your_question_here"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -41,6 +42,7 @@
         android:elevation="10dp">
         <TextView
             android:id="@+id/answer"
+            android:contentDescription="@string/answer_by_teacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"

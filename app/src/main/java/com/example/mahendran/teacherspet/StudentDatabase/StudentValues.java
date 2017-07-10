@@ -13,11 +13,59 @@ import java.util.Map;
 
 public class StudentValues implements Serializable {
 
-    public String studentName;
-    public String emailID;
-    public String studentph;
-    public String parentph;
-    public String address;
-    public String id;
+    private String studentName;
+    private String emailID;
+    private String studentph;
+    private String parentph;
+    private String address;
+    private String id;
     public Map<String,String> map=new HashMap<String,String>();
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getParentph() {
+        return parentph;
+    }
+
+    public void setParentph(String parentph) {
+        this.parentph = parentph;
+    }
+
+    public String getStudentph() {
+        return studentph;
+    }
+
+    public void setStudentph(String studentph) {
+        this.studentph = studentph;
+    }
+
+    public String getEmailID() {
+        return emailID;
+    }
+
+    public void setEmailID(String emailID) {
+        this.emailID = emailID;
+    }
 }

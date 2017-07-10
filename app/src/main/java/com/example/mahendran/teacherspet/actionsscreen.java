@@ -1,16 +1,11 @@
 package com.example.mahendran.teacherspet;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -21,15 +16,12 @@ import com.example.mahendran.teacherspet.DiscussionRoom.discussionroom;
 import com.example.mahendran.teacherspet.StudentDatabase.StudentValues;
 import com.example.mahendran.teacherspet.StudentDatabase.studentDatabase;
 import com.example.mahendran.teacherspet.Test.testsandassignments;
-import com.example.mahendran.teacherspet.DiscussionRoom.DiscussionboardValues;
-import com.example.mahendran.teacherspet.Widget.WidgetProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 
 public class actionsscreen extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
@@ -37,7 +29,7 @@ public class actionsscreen extends AppCompatActivity implements ConnectivityRece
     private ImageButton button2;
     private ImageButton button3;
     private ImageButton button4;
-    String studName="Fail";
+    String studName;
     SharedPreferences sharedpreferences;
     private FirebaseAuth auth;
 
@@ -51,8 +43,6 @@ public class actionsscreen extends AppCompatActivity implements ConnectivityRece
         setSupportActionBar(toolbar);
         auth = FirebaseAuth.getInstance();
         Intent intent = getIntent();
-        String id = intent.getStringExtra("String");
-
         sharedpreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String email=sharedpreferences.getString("Email", null);
         String className=sharedpreferences.getString("class", null);
@@ -68,7 +58,6 @@ public class actionsscreen extends AppCompatActivity implements ConnectivityRece
             button3 = (ImageButton) findViewById(R.id.discussionroom);
             button1.setVisibility(View.VISIBLE);
             button2.setVisibility(View.VISIBLE);
-            Log.v("Test1","Alohamora");
             button1.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -121,7 +110,7 @@ public class actionsscreen extends AppCompatActivity implements ConnectivityRece
                     }
                     else
                     {
-                        Toast.makeText(getBaseContext(), "You are not allowed in this class.",
+                        Toast.makeText(getBaseContext(), R.string.class_not_allowed,
                                 Toast.LENGTH_LONG).show();
                     }
                 }
@@ -139,7 +128,7 @@ public class actionsscreen extends AppCompatActivity implements ConnectivityRece
                     }
                         else
                         {
-                            Toast.makeText(getBaseContext(), "You are not allowed in this class.",
+                            Toast.makeText(getBaseContext(), R.string.class_not_allowed,
                                     Toast.LENGTH_LONG).show();
                         }
                 }
@@ -166,7 +155,7 @@ public class actionsscreen extends AppCompatActivity implements ConnectivityRece
                 for (DataSnapshot noteSnapshot: dataSnapshot.getChildren()){
                     noteSnapshot.getKey();
                     StudentValues note = noteSnapshot.getValue(StudentValues.class);
-                    if(note.studentName.equals(studentname)) {
+                    if(note.getStudentName().equals(studentname)) {
                         studentObjectList.add(note);
                     }
                 }
@@ -186,13 +175,13 @@ public class actionsscreen extends AppCompatActivity implements ConnectivityRece
         }
         for(StudentValues s:sv)
         {
-            studentList.add(s.studentName);
+            studentList.add(s.getStudentName());
         }
         if(studentList.contains(auth.getCurrentUser().getEmail()))
         {
             return true;
         }
-        Toast.makeText(getBaseContext(), "You are not allowed in this class.",
+        Toast.makeText(getBaseContext(), R.string.class_not_allowed,
                 Toast.LENGTH_LONG).show();
 
 
@@ -202,8 +191,6 @@ public class actionsscreen extends AppCompatActivity implements ConnectivityRece
 
     protected void onResume() {
         super.onResume();
-        // register connection status listener
-
         MyApplication.getInstance().setConnectivityListener(this);
     }
 
@@ -215,7 +202,7 @@ public class actionsscreen extends AppCompatActivity implements ConnectivityRece
 
     private void statusDisplay(boolean isConnected) {
         if(!(isConnected)) {
-            Toast.makeText(getApplication(), "There seems to be a connectivity issue. Please check your connectivity.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(),R.string.connectrivity_issue, Toast.LENGTH_SHORT).show();
         }
     }
 

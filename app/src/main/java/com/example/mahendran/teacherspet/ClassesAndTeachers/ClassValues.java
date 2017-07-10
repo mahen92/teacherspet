@@ -9,15 +9,11 @@ public class ClassValues {
 
     public void  setClassName(String className)
     {
-
-            ClassId = className;
-
+        ClassId = className;
     }
 
     public String getClassName()
     {
-
-            return ClassId;
-
+        return ClassId;
     }
 }

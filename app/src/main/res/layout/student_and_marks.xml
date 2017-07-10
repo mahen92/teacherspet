@@ -8,14 +8,16 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
-        android:paddingLeft="0dp"
+        android:background="#52dbff"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
         android:paddingTop="12dp"
         android:clickable="false"
         android:elevation="6dp">
 
         <TextView
             android:id="@+id/stud_name"
+            android:contentDescription="@string/Student_Name"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="?attr/selectableItemBackground"
@@ -24,6 +26,7 @@
             android:padding="2dp" />
         <TextView
             android:id="@+id/marks"
+            android:contentDescription="@string/Marks"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="?attr/selectableItemBackground"

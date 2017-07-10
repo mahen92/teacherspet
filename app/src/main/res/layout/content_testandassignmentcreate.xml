@@ -21,7 +21,9 @@
             android:id="@+id/highestScore"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:contentDescription="@string/highestScore"
             android:background="?attr/selectableItemBackground"
+            android:textColor="#ff0000"
             android:clickable="true"
             android:gravity="left"
             android:padding="3dp" />
@@ -30,7 +32,9 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/lowestScore"
             android:clickable="true"
+            android:textColor="#ff0000"
             android:gravity="right"
             android:padding="3dp" />
     </FrameLayout>
@@ -49,14 +53,18 @@
             android:layout_height="30dp"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
+            android:contentDescription="@string/average"
+            android:textColor="#ff0000"
             android:gravity="left"
             android:padding="3dp" />
         <TextView
             android:id="@+id/topranker"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:contentDescription="@string/topranker"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
+            android:textColor="#ff0000"
             android:gravity="right"
             android:padding="3dp" />
     </FrameLayout>
@@ -64,22 +72,25 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
+        android:background="#ff0000"
         android:padding="6dp"
         android:id="@+id/frame3"
         android:layout_below="@+id/frame2"
-        android:elevation="12dp">
+        android:elevation="24dp">
 
         <TextView
-            android:text="Student Name"
+            android:text="@string/Student_Name"
+            android:contentDescription="@string/Student_Name"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:gravity="left"
-            android:padding="3dp" />
+            android:padding="3dp"
+            android:paddingBottom="24dp"/>
         <TextView
-            android:text="Marks"
+            android:text="@string/Marks"
+            android:contentDescription="@string/Marks"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="?attr/selectableItemBackground"
@@ -97,10 +108,7 @@
         android:elevation="12dp"
         android:scrollbars="none"
         android:padding="0dp"
-        android:layout_below="@+id/frame"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="67dp" />
-
-
+        android:layout_below="@+id/frame3" />
 </RelativeLayout>

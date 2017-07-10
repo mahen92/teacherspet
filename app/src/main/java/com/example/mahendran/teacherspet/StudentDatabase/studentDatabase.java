@@ -4,28 +4,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.mahendran.teacherspet.Connectivity.ConnectivityReceiver;
 import com.example.mahendran.teacherspet.Connectivity.MyApplication;
 import com.example.mahendran.teacherspet.R;
-import com.example.mahendran.teacherspet.actionsscreen;
 import com.example.mahendran.teacherspet.customAdapter;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class studentDatabase extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
@@ -72,7 +64,6 @@ public class studentDatabase extends AppCompatActivity implements ConnectivityRe
 
     protected void onResume() {
         super.onResume();
-        // register connection status listener
         MyApplication.getInstance().setConnectivityListener(this);
     }
 
@@ -84,7 +75,7 @@ public class studentDatabase extends AppCompatActivity implements ConnectivityRe
 
     private void statusDisplay(boolean isConnected) {
         if(!(isConnected)) {
-            Toast.makeText(getApplication(), "There seems to be a connectivity issue. Please check your connectivity.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), R.string.connectrivity_issue, Toast.LENGTH_SHORT).show();
         }
     }
 

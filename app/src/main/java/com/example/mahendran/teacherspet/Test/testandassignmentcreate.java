@@ -3,39 +3,26 @@ package com.example.mahendran.teacherspet.Test;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mahendran.teacherspet.Connectivity.ConnectivityReceiver;
 import com.example.mahendran.teacherspet.Connectivity.MyApplication;
 import com.example.mahendran.teacherspet.R;
-import com.example.mahendran.teacherspet.StudentDatabase.FireBaseAdapter;
-import com.example.mahendran.teacherspet.StudentDatabase.FireBaseAdapterHolder;
 import com.example.mahendran.teacherspet.StudentDatabase.StudentValues;
-import com.example.mahendran.teacherspet.StudentDatabase.addStudent;
 import com.example.mahendran.teacherspet.customAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
 
 public class testandassignmentcreate extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
     private DatabaseReference mDatabase;
@@ -77,18 +64,16 @@ public class testandassignmentcreate extends AppCompatActivity implements Connec
                         int value = Integer.parseInt(note.map.get(testName));
                         if (value > highestValue) {
                                 highestValue = value;
-                                toppStudent=note.emailID;
+                                toppStudent=note.getEmailID();
                         }
                         if (value < lowestvalue) {
                             lowestvalue = value;
                         }
-                            sum = sum + value;
-
+                        sum = sum + value;
                         highScore.setText("Highest Mark :" + highestValue);
                         lowScore.setText("Lowest Mark :" + lowestvalue);
                         average.setText("Average :" + (sum / models.size()));
                         topper.setText("Top Student :" + toppStudent);
-
                     }
                 }
             }
@@ -99,7 +84,6 @@ public class testandassignmentcreate extends AppCompatActivity implements Connec
         String className=pref.getString("class", null);
         mapList=new ArrayList();
         mDatabase =  FirebaseDatabase.getInstance().getReference();
-
         mDatabase =  FirebaseDatabase.getInstance().getReference();
         referenceClassCloudEndPoint = mDatabase.child("Teachers");
         teacherCloudEndPoint = referenceClassCloudEndPoint.child(email);
@@ -134,7 +118,6 @@ public class testandassignmentcreate extends AppCompatActivity implements Connec
     }
     protected void onResume() {
         super.onResume();
-        // register connection status listener
         MyApplication.getInstance().setConnectivityListener(this);
     }
 
@@ -146,7 +129,7 @@ public class testandassignmentcreate extends AppCompatActivity implements Connec
 
     private void statusDisplay(boolean isConnected) {
         if(!(isConnected)) {
-            Toast.makeText(getApplication(), "There seems to be a connectivity issue. Please check your connectivity.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), R.string.connectrivity_issue, Toast.LENGTH_SHORT).show();
         }
     }
 }

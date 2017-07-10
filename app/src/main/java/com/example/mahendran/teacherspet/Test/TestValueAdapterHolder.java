@@ -19,7 +19,5 @@ public class TestValueAdapterHolder extends RecyclerView.ViewHolder{
     public TestValueAdapterHolder(View itemView) {
         super(itemView);
         className = (TextView) itemView.findViewById(R.id.name);
-
-
     }
 }

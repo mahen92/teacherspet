@@ -5,5 +5,13 @@ package com.example.mahendran.teacherspet.firebase;
  */
 
 public class Teachervalues {
-    public String teacherId;
+    private String teacherId;
+
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+    }
 }

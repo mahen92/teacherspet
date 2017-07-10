@@ -3,9 +3,7 @@ package com.example.mahendran.teacherspet.StudentDatabase;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.mahendran.teacherspet.profileActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -28,21 +26,17 @@ public class FireBaseAdapter extends FirebaseRecyclerAdapter<StudentValues, Fire
 
     @Override
     protected void populateViewHolder(FireBaseAdapterHolder viewHolder, final StudentValues model, int position) {
-        Log.v("Firebaser","adapeter");
-        viewHolder.name.setText(model.studentName);
-        final String id= model.id;
-        final String name= model.studentName;
+        viewHolder.name.setText(model.getEmailID());
         final StudentValues m=model;
         viewHolder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, profileActivity.class);
-                intent.putExtra("id",model.studentName);
+                intent.putExtra("id",model.getStudentName());
                 Bundle b = new Bundle();
                 b.putSerializable("Object", m);
                 intent.putExtras(b);
                 context.startActivity(intent);
-
             }
         });
     }
